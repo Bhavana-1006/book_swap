@@ -1,0 +1,25 @@
+{
+  "name": "bookswap",
+  "version": "1.0.0",
+  "description": "BookSwap – Campus Book Exchange and Second-Hand Books Marketplace",
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "node backend/server.js",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend"
+  },
+  "keywords": [
+    "bookswap",
+    "mern",
+    "campus-marketplace",
+    "textbook-exchange",
+    "react",
+    "mongodb",
+    "nodejs",
+    "express"
+  ],
+  "author": "Bhavana-1006",
+  "license": "MIT"
+}
