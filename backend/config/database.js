@@ -11,7 +11,13 @@ const maskUri = (uri) => {
 };
 
 const connectDB = async () => {
+  // If already connected, reuse existing connection pool
+  if (mongoose.connection.readyState >= 1) {
+    return mongoose.connection;
+  }
+
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/bookswap';
+
 
   try {
     const isAtlas = uri.includes('mongodb.net') || uri.startsWith('mongodb+srv://');

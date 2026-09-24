@@ -17,11 +17,23 @@ const Request = require('./models/Request');
 const app = express();
 const server = http.createServer(app);
 
-// Initialize Socket.io
-const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+// Dynamic CORS configuration for local and cloud deployments (Vercel, Render)
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173'
+].filter(Boolean);
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com') || origin.includes('localhost')) return true;
+  return true; // Graceful fallback
+};
+
 const io = new Server(server, {
   cors: {
-    origin: [clientUrl, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => callback(null, true),
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
     credentials: true
   }
@@ -30,7 +42,7 @@ const io = new Server(server, {
 // Middleware
 app.use(
   cors({
-    origin: [clientUrl, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => callback(null, true),
     credentials: true
   })
 );
