@@ -22,7 +22,8 @@ const ChatModal = ({ request, isOpen, onClose }) => {
     if (!isOpen || !requestId) return;
 
     // Connect to Socket server
-    const socket = io(window.location.origin, {
+    const socketHost = import.meta.env.VITE_API_URL || window.location.origin;
+    const socket = io(socketHost, {
       path: '/socket.io',
       transports: ['websocket', 'polling']
     });
