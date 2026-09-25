@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import PasswordStrengthIndicator, { checkPasswordCriteria } from '../components/PasswordStrengthIndicator';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -40,13 +41,30 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      error('Passwords do not match');
+    const { isValid, criteria, isMatch } = checkPasswordCriteria(password, confirmPassword);
+
+    if (!criteria.length) {
+      error('Password must be at least 8 characters long');
       return;
     }
-
-    if (password.length < 6) {
-      error('Password must be at least 6 characters');
+    if (!criteria.uppercase) {
+      error('Password must contain at least one uppercase letter (A-Z)');
+      return;
+    }
+    if (!criteria.lowercase) {
+      error('Password must contain at least one lowercase letter (a-z)');
+      return;
+    }
+    if (!criteria.number) {
+      error('Password must contain at least one number (0-9)');
+      return;
+    }
+    if (!criteria.special) {
+      error('Password must contain at least one special character (!@#$%^&*)');
+      return;
+    }
+    if (!isMatch) {
+      error('Passwords do not match');
       return;
     }
 
@@ -54,7 +72,7 @@ const Register = () => {
     try {
       const formData = new FormData();
       formData.append('name', name.trim());
-      formData.append('email', email.trim());
+      formData.append('email', email.trim().toLowerCase());
       formData.append('password', password);
       formData.append('confirmPassword', confirmPassword);
       formData.append('college', college.trim());
@@ -64,7 +82,7 @@ const Register = () => {
       }
 
       await register(formData);
-      success('Welcome to BookSwap! Your account was registered.');
+      success('Welcome to BookSwap! Your account was registered successfully.');
       navigate('/');
     } catch (err) {
       error(err.response?.data?.message || err.message || 'Registration failed');
@@ -202,7 +220,7 @@ const Register = () => {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Min 6 chars"
+                    placeholder="Min 8 characters"
                     required
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-cream-300 text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
@@ -227,6 +245,9 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Real-time Password Strength Criteria */}
+            <PasswordStrengthIndicator password={password} confirmPassword={confirmPassword} />
+
             <button
               type="submit"
               disabled={loading}
@@ -249,3 +270,4 @@ const Register = () => {
 };
 
 export default Register;
+
