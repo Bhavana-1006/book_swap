@@ -96,19 +96,16 @@ const Home = () => {
   };
 
   return (
-    <div className="relative min-h-screen">
-      {/* FULL HOME PAGE CONTINUOUS FLOATING 3D EDUCATIONAL BOOKS ANIMATION BACKGROUND */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-55 md:opacity-65" aria-hidden="true">
-        <BookshelfScene className="w-full h-full" />
-        {/* Soft atmospheric gradient overlay ensuring foreground text remains perfectly readable */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/40 via-cream-50/30 to-white/60 pointer-events-none" />
-      </div>
+    <div className="space-y-20 pb-16">
+      {/* 1. HERO SECTION WITH SUBTLE 3D EDUCATIONAL BOOKSHELF ANIMATION */}
+      <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100/80 via-cream-50 to-white border-b border-cream-200">
+        {/* Subtle BookshelfScene 3D background inside Hero section only */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-40 md:opacity-45" aria-hidden="true">
+          <BookshelfScene className="w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/60 via-cream-50/50 to-white/80 pointer-events-none" />
+        </div>
 
-      {/* FOREGROUND MAIN CONTENT */}
-      <div className="relative z-10 space-y-20 pb-16">
-        {/* 1. HERO SECTION */}
-        <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden border-b border-cream-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Pill Tag */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-800 text-xs font-bold tracking-wide shadow-sm">
@@ -118,7 +115,7 @@ const Home = () => {
 
             {/* Main Heading & Tagline */}
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold text-navy-900 tracking-tight leading-[1.15]">
-              Give Books a <span className="text-brand-600 underline decoration-brand-200 decoration-wavy decoration-2">Second Life</span>.
+              Give Books a <span className="text-brand-600">Second Life</span>.
             </h1>
 
             {/* Supporting Text */}
@@ -541,7 +538,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      </div>
     </div>
   );
 };

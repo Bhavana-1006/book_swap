@@ -154,98 +154,13 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Navigation Links */}
-            <div className="space-y-1">
-              <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-2">
-                Main Menu
-              </span>
-
-              <button
-                onClick={() => {
-                  setSelectedCategory('All');
-                  setSearchTerm('');
-                }}
-                className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-colors ${
-                  selectedCategory === 'All' && !searchTerm
-                    ? 'bg-navy-900 text-white shadow-sm'
-                    : 'text-navy-800 hover:bg-cream-100'
-                }`}
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </button>
-
-              <Link
-                to="/browse"
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
-              >
-                <BookOpen className="w-4 h-4 text-gray-500" />
-                <span>All Books (Marketplace)</span>
-              </Link>
-
-              <Link
-                to="/create-listing"
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 transition-colors"
-              >
-                <PlusCircle className="w-4 h-4 text-brand-600" />
-                <span>Post a Book</span>
-              </Link>
-
-              <Link
-                to="/my-listings"
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Layers className="w-4 h-4 text-gray-500" />
-                  <span>My Listings</span>
-                </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cream-200 text-navy-800">
-                  {stats.myListings}
-                </span>
-              </Link>
-
-              <Link
-                to="/requests"
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Inbox className="w-4 h-4 text-gray-500" />
-                  <span>My Requests</span>
-                </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cream-200 text-navy-800">
-                  {stats.myRequests}
-                </span>
-              </Link>
-
-              <Link
-                to="/wishlist"
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Heart className="w-4 h-4 text-rose-500" />
-                  <span>Wishlist</span>
-                </div>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700">
-                  {stats.wishlist}
-                </span>
-              </Link>
-
-              <Link
-                to="/profile"
-                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
-              >
-                <User className="w-4 h-4 text-gray-500" />
-                <span>My Profile</span>
-              </Link>
-            </div>
-
             {/* Vertical Book Categories in Sidebar */}
-            <div className="space-y-1 pt-3 border-t border-cream-200">
+            <div className="space-y-1">
               <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-2">
                 Book Categories
               </span>
 
-              {categories.filter(c => c.id !== 'All').map((cat) => {
+              {categories.map((cat) => {
                 const IconComponent = cat.icon;
                 const isSelected = selectedCategory === cat.id;
 
@@ -258,17 +173,32 @@ const Dashboard = () => {
                     }}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                       isSelected
-                        ? 'bg-brand-600 text-white shadow-sm'
+                        ? 'bg-navy-900 text-white shadow-sm'
                         : 'text-navy-800 hover:bg-cream-100'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <IconComponent className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-brand-600'}`} />
+                      <IconComponent className={`w-4 h-4 ${isSelected ? 'text-brand-400' : 'text-brand-600'}`} />
                       <span>{cat.label}</span>
                     </div>
                   </button>
                 );
               })}
+            </div>
+
+            {/* Account & Profile */}
+            <div className="space-y-1 pt-3 border-t border-cream-200">
+              <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 mb-2">
+                Account
+              </span>
+
+              <Link
+                to="/profile"
+                className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-navy-800 hover:bg-cream-100 transition-colors"
+              >
+                <User className="w-4 h-4 text-gray-500" />
+                <span>My Profile</span>
+              </Link>
             </div>
 
             {/* Logout Button */}
