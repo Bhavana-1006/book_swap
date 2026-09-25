@@ -42,36 +42,23 @@ const Home = () => {
   const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    // 1. Fetch Recently Added Books
-    api.get('/api/books?sort=newest&limit=6')
-      .then((res) => {
-        if (res.data.success) {
-          setRecentBooks(res.data.books || []);
-        }
-      })
-      .catch((err) => console.error('Error fetching recent books:', err))
-      .finally(() => setLoadingRecent(false));
-
-    // 2. Fetch Popular / Varied Books
-    api.get('/api/books?limit=6')
-      .then((res) => {
-        if (res.data.success) {
-          setPopularBooks(res.data.books || []);
-        }
-      })
-      .catch((err) => console.error('Error fetching popular books:', err))
-      .finally(() => setLoadingPopular(false));
-
-    // 3. Fetch Nearby Books
     const cityParam = user?.city ? `?city=${encodeURIComponent(user.city)}` : '';
-    api.get(`/api/books/nearby${cityParam}`)
-      .then((res) => {
-        if (res.data.success) {
-          setNearbyBooks((res.data.books || []).slice(0, 4));
-        }
+
+    Promise.all([
+      api.get('/api/books?sort=newest&limit=6').catch(() => ({ data: { success: false } })),
+      api.get('/api/books?limit=6').catch(() => ({ data: { success: false } })),
+      api.get(`/api/books/nearby${cityParam}`).catch(() => ({ data: { success: false } }))
+    ])
+      .then(([recentRes, popularRes, nearbyRes]) => {
+        if (recentRes.data?.success) setRecentBooks(recentRes.data.books || []);
+        if (popularRes.data?.success) setPopularBooks(popularRes.data.books || []);
+        if (nearbyRes.data?.success) setNearbyBooks((nearbyRes.data.books || []).slice(0, 4));
       })
-      .catch((err) => console.error('Error fetching nearby books:', err))
-      .finally(() => setLoadingNearby(false));
+      .finally(() => {
+        setLoadingRecent(false);
+        setLoadingPopular(false);
+        setLoadingNearby(false);
+      });
   }, [user]);
 
   const handleSearch = (e) => {

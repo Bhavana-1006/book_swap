@@ -16,10 +16,14 @@ import {
   Send,
   Edit,
   Repeat,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  X,
   Layers,
-  CheckCircle2,
   BookmarkCheck,
-  HelpCircle
+  Eye,
+  Camera
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -28,6 +32,13 @@ import RequestModal from '../components/RequestModal';
 import BookCard from '../components/BookCard';
 import { formatPrice } from '../utils/formatPrice';
 import { getTopicsForBook } from '../utils/subjectTopics';
+
+const IMAGE_ANGLE_LABELS = [
+  { title: 'Front Cover', short: 'Front', icon: 'BookOpen' },
+  { title: 'Back Cover & ISBN', short: 'Back', icon: 'Layers' },
+  { title: 'Table of Contents / Index', short: 'Index', icon: 'BookmarkCheck' },
+  { title: 'Actual Condition Photo', short: 'Real Photo', icon: 'Camera' }
+];
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -39,6 +50,7 @@ const BookDetails = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const [inWishlist, setInWishlist] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
@@ -57,6 +69,7 @@ const BookDetails = () => {
   useEffect(() => {
     setLoading(true);
     setSelectedTopicIndex(0);
+    setActiveImageIndex(0);
     api.get(`/api/books/${id}`)
       .then((res) => {
         if (res.data.success && res.data.book) {
@@ -148,6 +161,18 @@ const BookDetails = () => {
     }
   };
 
+  const handlePrevImage = (e) => {
+    e?.stopPropagation();
+    if (!images.length) return;
+    setActiveImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNextImage = (e) => {
+    e?.stopPropagation();
+    if (!images.length) return;
+    setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center">
@@ -195,7 +220,7 @@ const BookDetails = () => {
           {/* Share Button */}
           <button
             onClick={handleShare}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-cream-300 bg-white hover:bg-cream-100 text-xs font-semibold text-navy-900 transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-cream-300 bg-white hover:bg-cream-100 text-xs font-semibold text-navy-900 transition-colors shadow-sm"
             title="Share this book"
           >
             {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-navy-700" />}
@@ -205,7 +230,7 @@ const BookDetails = () => {
           {isOwner && (
             <Link
               to={`/edit-listing/${book._id}`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-cream-300 bg-white hover:bg-cream-100 text-xs font-bold text-navy-900 transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-cream-300 bg-white hover:bg-cream-100 text-xs font-bold text-navy-900 transition-colors shadow-sm"
             >
               <Edit className="w-3.5 h-3.5 text-brand-600" />
               <span>Edit Listing</span>
@@ -214,16 +239,44 @@ const BookDetails = () => {
         </div>
       </div>
 
-      {/* 2. Main Grid: Left Book Showcase + Right Details */}
+      {/* 2. Main Grid: Left Interactive Showcase + Right Details */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        {/* Left Column: Image Showcase (5 cols) */}
+        {/* Left Column: Interactive Image Gallery (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 border border-cream-200 overflow-hidden shadow-hover group">
+          {/* Angle Switcher Pills */}
+          {images.length > 1 && (
+            <div className="flex items-center gap-1.5 p-1 bg-cream-100 rounded-2xl border border-cream-200 overflow-x-auto">
+              {images.slice(0, 4).map((_, idx) => {
+                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
+                const isSelected = activeImageIndex === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-xl text-[11px] font-bold transition-all truncate text-center ${
+                      isSelected
+                        ? 'bg-white text-navy-900 shadow-sm border border-cream-200 font-extrabold'
+                        : 'text-gray-600 hover:text-navy-900'
+                    }`}
+                  >
+                    {label.short}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Main Showcase Image Container */}
+          <div
+            onClick={() => images.length > 0 && setLightboxOpen(true)}
+            className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 border border-cream-200 overflow-hidden shadow-hover group cursor-zoom-in"
+            title="Click to zoom image"
+          >
             {images.length > 0 ? (
               <img
                 src={images[activeImageIndex] || images[0]}
-                alt={book.title}
-                className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                alt={`${book.title} - ${IMAGE_ANGLE_LABELS[activeImageIndex]?.title || 'View'}`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80';
@@ -235,6 +288,32 @@ const BookDetails = () => {
                 <span className="text-xs font-semibold text-navy-700">Academic Textbook Cover</span>
               </div>
             )}
+
+            {/* Next / Prev Image Hover Controls */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevImage}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
+                  title="Previous image"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
+                  title="Next image"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </>
+            )}
+
+            {/* Zoom Icon Badge */}
+            <div className="absolute top-4 right-4 p-2 rounded-xl bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all shadow-md z-10 flex items-center gap-1 text-[11px] font-bold">
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>Zoom</span>
+            </div>
 
             {/* Listing Type Badge in Indian Currency */}
             <div className="absolute top-4 left-4 z-10">
@@ -258,33 +337,43 @@ const BookDetails = () => {
               )}
             </div>
 
-            {/* Availability Ribbon */}
-            {!isAvailable && (
-              <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white shadow-md z-10">
-                {book.status}
-              </div>
-            )}
+            {/* Current Active Angle Indicator Ribbon */}
+            <div className="absolute bottom-4 left-4 px-3 py-1 rounded-xl text-xs font-bold bg-navy-900/85 text-white shadow-sm backdrop-blur-sm z-10 flex items-center gap-1.5">
+              <Eye className="w-3.5 h-3.5 text-amber-400" />
+              <span>{IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}</span>
+            </div>
 
             {/* Condition badge */}
-            <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 text-navy-900 shadow-sm border border-cream-200 backdrop-blur-sm">
+            <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 text-navy-900 shadow-sm border border-cream-200 backdrop-blur-sm z-10">
               Condition: {book.condition}
             </div>
           </div>
 
-          {/* Thumbnail Gallery */}
+          {/* Thumbnail Gallery Strip */}
           {images.length > 1 && (
-            <div className="flex gap-2.5 overflow-x-auto pb-1">
-              {images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
-                    activeImageIndex === idx ? 'border-brand-600 shadow-md scale-105' : 'border-cream-300 opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
+            <div className="grid grid-cols-4 gap-2 pt-1">
+              {images.slice(0, 4).map((img, idx) => {
+                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
+                const isSelected = activeImageIndex === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`relative rounded-2xl overflow-hidden border-2 transition-all flex flex-col items-center bg-cream-100 ${
+                      isSelected
+                        ? 'border-brand-600 shadow-md scale-105 ring-2 ring-brand-500/20'
+                        : 'border-cream-300 opacity-75 hover:opacity-100'
+                    }`}
+                  >
+                    <div className="aspect-[3/4] w-full">
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <span className="w-full py-0.5 text-[9px] font-bold text-center bg-navy-900/90 text-white truncate px-1">
+                      {label.short}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
 
@@ -295,7 +384,7 @@ const BookDetails = () => {
             </div>
             <div className="text-xs">
               <p className="font-bold text-navy-900">Direct Campus Handover</p>
-              <p className="text-gray-500">Meet safely on university campus or mutually agreed meetup points.</p>
+              <p className="text-gray-500">Meet safely on university campus or mutually agreed library meetup points.</p>
             </div>
           </div>
         </div>
@@ -603,6 +692,76 @@ const BookDetails = () => {
             ))}
           </div>
         </section>
+      )}
+
+      {/* 4. Fullscreen Image Lightbox Modal */}
+      {lightboxOpen && (
+        <div
+          onClick={() => setLightboxOpen(false)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fade-in"
+        >
+          {/* Top toolbar */}
+          <div className="w-full max-w-5xl flex items-center justify-between text-white mb-3 px-2">
+            <span className="text-sm font-bold">
+              {book.title} — {IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}
+            </span>
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Main modal image */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl max-h-[80vh] flex items-center justify-center"
+          >
+            <img
+              src={images[activeImageIndex] || images[0]}
+              alt={book.title}
+              className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
+            />
+
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevImage}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
+                >
+                  <ChevronLeft className="w-7 h-7" />
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
+                >
+                  <ChevronRight className="w-7 h-7" />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Angle switcher in lightbox */}
+          {images.length > 1 && (
+            <div className="flex gap-2 mt-4 overflow-x-auto">
+              {images.slice(0, 4).map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveImageIndex(idx);
+                  }}
+                  className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all ${
+                    activeImageIndex === idx ? 'border-amber-400 scale-105' : 'border-white/30 opacity-60'
+                  }`}
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       {/* Request Modal */}
