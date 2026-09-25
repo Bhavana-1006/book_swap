@@ -100,31 +100,29 @@ const Home = () => {
       {/* 1. HERO SECTION WITH 3D EDUCATIONAL BOOKSHELF ANIMATION */}
       <section className="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100 via-cream-50 to-white border-b border-cream-200">
         {/* BookshelfScene 3D background inside Hero section */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-90" aria-hidden="true">
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85" aria-hidden="true">
           <BookshelfScene className="w-full h-full" />
-          {/* Subtle soft gradient that keeps books vibrant while ensuring crystal clear text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/40 via-cream-50/20 to-white/90 pointer-events-none" />
+          {/* Smooth atmospheric fade for natural text readability without any box */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-50/90 via-cream-50/40 to-white/80 pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-5">
             {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-brand-200 text-brand-800 text-xs font-bold tracking-wide shadow-sm backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold tracking-wide shadow-sm">
               <Sparkles className="w-4 h-4 text-brand-600" />
               <span>Campus Book Exchange & Second-Hand Marketplace</span>
             </div>
 
             {/* Main Heading & Tagline */}
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 tracking-tight leading-[1.15] drop-shadow-sm">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 tracking-tight leading-[1.15]">
               Give Books a <span className="text-brand-600">Second Life</span>.
             </h1>
 
-            {/* Supporting Text with high contrast card backdrop for perfect readability */}
-            <div className="max-w-2xl mx-auto p-4 rounded-2xl bg-white/85 backdrop-blur-md border border-cream-200/90 shadow-soft">
-              <p className="text-sm sm:text-base md:text-lg text-navy-900 leading-relaxed font-semibold">
-                Buy, sell, donate, or swap college textbooks directly with fellow students. Save up to 80% on semester coursework and keep academic resources in circulation.
-              </p>
-            </div>
+            {/* Supporting Text - Pure typography, no box container */}
+            <p className="text-base sm:text-lg md:text-xl text-navy-900 font-medium leading-relaxed max-w-2xl mx-auto">
+              Buy, sell, donate, or swap college textbooks directly with fellow students. Save up to 80% on semester coursework and keep academic resources in circulation.
+            </p>
 
             {/* Action Buttons - Distinct from Navbar (no duplicate Login/Register buttons) */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
