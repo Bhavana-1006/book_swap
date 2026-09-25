@@ -2317,8 +2317,8 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
 
     function configureResponsiveTargets() {
       const narrow = viewWidth < 820;
-      shelfCameraPosition.set(0, narrow ? 2.02 : 1.92, narrow ? 8.7 : 8.1);
-      shelfCameraTarget.set(0, narrow ? 1.57 : 1.55, 0);
+      shelfCameraPosition.set(0, narrow ? 0.6 : 0.4, narrow ? 11.5 : 9.8);
+      shelfCameraTarget.set(0, 0.4, 0);
       inspectPosition.set(narrow ? 0 : -2.25, narrow ? 2.3 : 1.56, narrow ? 0.15 : 0);
       inspectCameraPosition.set(narrow ? 0 : -0.52, narrow ? 2.46 : 1.78, narrow ? 5.7 : 5.25);
       inspectCameraTarget.copy(inspectPosition);
@@ -2412,6 +2412,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       floor.scale.set(30, 20, 1);
       floor.rotation.x = -Math.PI * 0.5;
       floor.position.y = -0.02;
+      floor.visible = false;
       scene.add(floor);
 
       const back = createMesh(shared.plane, new THREE.MeshStandardMaterial({
@@ -2421,27 +2422,32 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       }), "paper-backdrop", false, true);
       back.scale.set(28, 14, 1);
       back.position.set(0, 5.5, -3.3);
+      back.visible = false;
       scene.add(back);
 
       const shelf = createMesh(shared.box, shared.walnut, "walnut-shelf");
       shelf.scale.set(17, 0.28, 1.08);
       shelf.position.set(0, 0.33, -0.03);
+      shelf.visible = false;
       shelfStage.add(shelf);
 
       const shelfLip = createMesh(shared.box, shared.walnutDark, "walnut-shelf-lip");
       shelfLip.scale.set(17.05, 0.075, 1.14);
       shelfLip.position.set(0, 0.205, 0.02);
+      shelfLip.visible = false;
       shelfStage.add(shelfLip);
 
       const backRail = createMesh(shared.box, shared.walnut, "walnut-back-rail");
       backRail.scale.set(17, 0.17, 0.2);
       backRail.position.set(0, 0.68, -0.52);
+      backRail.visible = false;
       shelfStage.add(backRail);
 
       [-7.65, 7.65].forEach((x, index) => {
         const upright = createMesh(shared.box, shared.walnutDark, `shelf-upright-${index}`);
         upright.scale.set(0.2, 3.8, 0.72);
         upright.position.set(x, 2.05, -0.28);
+        upright.visible = false;
         shelfStage.add(upright);
       });
 
@@ -2455,6 +2461,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       shadowStrip.scale.set(16, 0.85, 1);
       shadowStrip.rotation.x = -Math.PI * 0.5;
       shadowStrip.position.set(0, 0.49, 0.06);
+      shadowStrip.visible = false;
       shelfStage.add(shadowStrip);
 
       roomMaterials.floor = floor.material;
@@ -3742,143 +3749,80 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       requestFrame();
     }
 
+    
+    const FLOATING_CONFIGS = [
+      // 0: Mathematics (10th Class) -> Upper-Left
+      { baseX: -4.4, baseY: 3.0, baseZ: -0.8, rotX: 0.12, rotY: 0.32, rotZ: -0.12, phase: 0.0, speed: 0.75, ampY: 0.30, ampX: 0.18, rotSpeed: 0.35 },
+      // 1: Physics (Intermediate MPC) -> Upper-Right
+      { baseX: 4.5, baseY: 2.9, baseZ: -0.6, rotX: -0.14, rotY: -0.35, rotZ: 0.10, phase: 1.6, speed: 0.68, ampY: 0.32, ampX: 0.15, rotSpeed: -0.30 },
+      // 2: Chemistry (Intermediate BiPC) -> Left-Middle
+      { baseX: -5.1, baseY: 0.8, baseZ: 0.2, rotX: 0.08, rotY: 0.42, rotZ: 0.08, phase: 2.9, speed: 0.82, ampY: 0.26, ampX: 0.22, rotSpeed: 0.40 },
+      // 3: Human Anatomy (Medical) -> Right-Middle
+      { baseX: 5.2, baseY: 0.6, baseZ: 0.3, rotX: -0.10, rotY: -0.40, rotZ: -0.08, phase: 4.2, speed: 0.72, ampY: 0.30, ampX: 0.18, rotSpeed: -0.38 },
+      // 4: Data Structures (Engineering CSE) -> Lower-Left
+      { baseX: -3.9, baseY: -1.6, baseZ: -0.4, rotX: 0.16, rotY: 0.22, rotZ: -0.18, phase: 5.1, speed: 0.78, ampY: 0.28, ampX: 0.20, rotSpeed: 0.32 },
+      // 5: AI & Machine Learning (Engineering AI) -> Lower-Right
+      { baseX: 4.0, baseY: -1.7, baseZ: -0.3, rotX: -0.15, rotY: -0.28, rotZ: 0.15, phase: 1.0, speed: 0.62, ampY: 0.34, ampX: 0.19, rotSpeed: -0.28 },
+      // 6: Database Systems (Engineering DBMS) -> Lower-Center / Deep subtle
+      { baseX: 0.0, baseY: -2.8, baseZ: -1.6, rotX: 0.22, rotY: 0.08, rotZ: 0.04, phase: 3.5, speed: 0.58, ampY: 0.22, ampX: 0.14, rotSpeed: 0.22 },
+    ];
+
     function updateShelfLayout(delta, elapsed) {
-      if (mode === "hero") {
-        position = reducedMotion
-          ? targetPosition
-          : damp(position, targetPosition, 9.5, delta);
-        if (Math.abs(position - targetPosition) < 0.0005) position = targetPosition;
-
-        if (wheelIdle > 0) {
-          wheelIdle -= delta;
-          if (wheelIdle <= 0) targetPosition = Math.round(targetPosition);
-        }
-
-        const nearest = mod(Math.round(position), BOOKS.length);
-        if (nearest !== selectedIndex) updateSelection(nearest, false);
-      }
+      const narrow = viewWidth < 820;
+      const spreadX = narrow ? 0.62 : 1.0;
+      const spreadY = narrow ? 0.72 : 1.0;
 
       bookRigs.forEach((rig, index) => {
         if (rig.root.parent !== shelfStage) return;
 
-        let offset = index - position;
-        offset -= Math.round(offset / BOOKS.length) * BOOKS.length;
-        const distance = Math.abs(offset);
-        const wrappedAcrossSeam = rig.lastOffset !== null
-          && Math.abs(offset - rig.lastOffset) > BOOKS.length * 0.5;
-        const focus = 1 - clamp(distance, 0, 1);
-        const targetX = offset * spacing;
-        const targetY = shelfBoardTop + rig.base.height * 0.5 + focus * 0.15;
-        const targetZ = 0.13 + focus * 0.24 - Math.min(distance, 2.8) * 0.07;
-        const targetRotationY = -offset * 0.105;
-        const targetRotationZ = -offset * 0.018;
-        const targetScale = 1 + focus * 0.09;
-        const speed = reducedMotion ? 1000 : 12;
+        const cfg = FLOATING_CONFIGS[index % FLOATING_CONFIGS.length];
 
-        if (wrappedAcrossSeam) {
-          rig.root.position.x = targetX;
-          rig.opacity = 0;
-        }
-        rig.lastOffset = offset;
+        // Continuous smooth floating motion
+        const floatY = Math.sin(elapsed * cfg.speed + cfg.phase) * cfg.ampY * spreadY;
+        const floatX = Math.cos(elapsed * cfg.speed * 0.7 + cfg.phase) * cfg.ampX * spreadX;
+        const floatZ = Math.sin(elapsed * cfg.speed * 0.5 + cfg.phase) * 0.16;
 
-        rig.root.position.x = damp(rig.root.position.x, targetX, speed, delta);
-        rig.root.position.y = damp(rig.root.position.y, targetY, speed, delta);
-        rig.root.position.z = damp(rig.root.position.z, targetZ, speed, delta);
-        rig.root.rotation.y = damp(rig.root.rotation.y, targetRotationY, speed, delta);
-        rig.root.rotation.z = damp(rig.root.rotation.z, targetRotationZ, speed, delta);
-        const nextScale = damp(rig.root.scale.x, targetScale, speed, delta);
-        rig.root.scale.setScalar(nextScale);
+        // Continuous smooth rotation drift
+        const swayRotX = cfg.rotX + Math.sin(elapsed * cfg.rotSpeed * 0.8 + cfg.phase) * 0.08;
+        const swayRotY = cfg.rotY + Math.cos(elapsed * cfg.rotSpeed + cfg.phase) * 0.10;
+        const swayRotZ = cfg.rotZ + Math.sin(elapsed * cfg.rotSpeed * 0.6 + cfg.phase) * 0.06;
 
-        const fadeProgress = clamp((distance - 2.55) / 0.7, 0, 1);
-        const targetOpacity = 1 - smoothstep(fadeProgress);
-        rig.opacity = reducedMotion
-          ? targetOpacity
-          : damp(rig.opacity, targetOpacity, 18, delta);
+        const targetX = cfg.baseX * spreadX + floatX;
+        const targetY = cfg.baseY * spreadY + floatY;
+        const targetZ = cfg.baseZ + floatZ;
+
+        rig.root.position.x = damp(rig.root.position.x, targetX, 5, delta);
+        rig.root.position.y = damp(rig.root.position.y, targetY, 5, delta);
+        rig.root.position.z = damp(rig.root.position.z, targetZ, 5, delta);
+
+        rig.root.rotation.x = damp(rig.root.rotation.x, swayRotX, 4, delta);
+        rig.root.rotation.y = damp(rig.root.rotation.y, swayRotY, 4, delta);
+        rig.root.rotation.z = damp(rig.root.rotation.z, swayRotZ, 4, delta);
+
+        // Natural soft opacity
+        rig.opacity = damp(rig.opacity, 0.95, 8, delta);
         rig.fadeMaterials.forEach((material) => {
           material.opacity = rig.opacity;
         });
-        rig.contactShadow.visible = true;
-        rig.contactShadow.material.opacity = rig.opacity * 0.24;
-        rig.hit.visible = rig.opacity > 0.12;
+        if (rig.contactShadow) rig.contactShadow.visible = false;
+        rig.hit.visible = true;
 
-        const isHovered = hoveredIndex === index && mode === "hero";
-        const hoverPreview = isHovered && !reducedMotion;
-        const hoverAngle = hoverPreview ? -0.085 : 0;
+        const isHovered = hoveredIndex === index && mode === 'hero';
+        const hoverAngle = isHovered ? -0.12 : 0;
         rig.frontPivot.rotation.y = damp(
           rig.frontPivot.rotation.y,
           hoverAngle,
-          reducedMotion ? 1000 : 13,
-          delta
-        );
-        rig.pagePivots.forEach((pagePivot) => {
-          pagePivot.rotation.y = damp(
-            pagePivot.rotation.y,
-            0,
-            reducedMotion ? 1000 : 13,
-            delta
-          );
-          pagePivot.rotation.z = damp(
-            pagePivot.rotation.z,
-            0,
-            reducedMotion ? 1000 : 13,
-            delta
-          );
-          updateFlexiblePage(pagePivot, 0, delta);
-        });
-
-        const idle = reducedMotion ? 0 : Math.sin(elapsed * 0.72 + index * 0.8) * 0.012 * focus;
-        rig.motion.position.y = damp(rig.motion.position.y, idle + (hoverPreview ? 0.035 : 0), 9, delta);
-        rig.motion.rotation.x = damp(
-          rig.motion.rotation.x,
-          hoverPreview ? pointer.ndc.y * 0.035 : 0,
-          10,
-          delta
-        );
-        rig.motion.rotation.y = damp(
-          rig.motion.rotation.y,
-          hoverPreview ? -pointer.ndc.x * 0.035 : 0,
           10,
           delta
         );
       });
     }
 
-    function updateTransition(delta) {
-      if (mode === "opening") {
-        transitionTime = Math.min(
-          1,
-          transitionTime + delta / DETAIL_TRANSITION_DURATION
-        );
-        applyOpeningPose(transitionTime);
-        updatePaginatedBook(activeBook, delta, 0);
-        if (transitionTime >= 1) finishOpening();
-      } else if (mode === "closing") {
-        transitionTime = Math.min(
-          1,
-          transitionTime + delta / SHELF_TRANSITION_DURATION
-        );
-        applyClosingPose(transitionTime);
-        updatePaginatedBook(activeBook, delta, 0);
-        if (transitionTime >= 1) finishClosing();
-      } else if (mode === "hero") {
-        shelfStage.position.y = damp(shelfStage.position.y, 0, 10, delta);
-        shelfStage.position.z = damp(shelfStage.position.z, 0, 10, delta);
-        camera.position.x = damp(camera.position.x, shelfCameraPosition.x, 8, delta);
-        camera.position.y = damp(camera.position.y, shelfCameraPosition.y, 8, delta);
-        camera.position.z = damp(camera.position.z, shelfCameraPosition.z, 8, delta);
-        transitionCameraTarget.copy(shelfCameraTarget);
-        currentViewOffsetX = 0;
-        applyDetailViewOffset();
-        camera.lookAt(shelfCameraTarget);
-      }
-    }
-
     function updateDust(elapsed) {
-      if (reducedMotion) return;
-      const dust = scene.getObjectByName("paper-dust");
+      const dust = scene.getObjectByName('paper-dust');
       if (dust) {
-        dust.rotation.y = elapsed * 0.012;
-        dust.position.y = Math.sin(elapsed * 0.17) * 0.025;
+        dust.rotation.y = elapsed * 0.02;
+        dust.position.y = Math.sin(elapsed * 0.25) * 0.04;
       }
     }
 
@@ -3926,13 +3870,9 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
 
       renderer.render(scene, camera);
 
-      const shelfMoving = Math.abs(position - targetPosition) > 0.0005 || wheelIdle > 0;
-      const shouldContinue = !reducedMotion
-        || mode === "opening"
-        || mode === "closing"
-        || shelfMoving
-        || themeIsMoving;
-      if (shouldContinue && !suspended) requestFrame();
+      if (!suspended) {
+        requestFrame();
+      }
     }
 
     function resize() {
@@ -4152,7 +4092,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       scene.environmentIntensity = 0.72;
       pmremGenerator.dispose();
 
-      camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60);
+      camera = new THREE.PerspectiveCamera(48, 1, 0.1, 60);
       shelfStage = new THREE.Group();
       shelfStage.name = "continuous-shelf-stage";
       scene.add(shelfStage);

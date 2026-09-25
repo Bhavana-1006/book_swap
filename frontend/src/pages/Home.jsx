@@ -96,16 +96,19 @@ const Home = () => {
   };
 
   return (
-    <div className="space-y-20 pb-16">
-      {/* 1. HERO SECTION WITH SUBTLE EDUCATIONAL BOOKSHELF ANIMATION BACKGROUND */}
-      <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100/80 via-cream-50 to-white border-b border-cream-200">
-        {/* Subtle BookshelfScene 3D background */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-30 md:opacity-35" aria-hidden="true">
-          <BookshelfScene className="w-full h-full" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/70 via-cream-50/60 to-white/90" />
-        </div>
+    <div className="relative min-h-screen">
+      {/* FULL HOME PAGE CONTINUOUS FLOATING 3D EDUCATIONAL BOOKS ANIMATION BACKGROUND */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-55 md:opacity-65" aria-hidden="true">
+        <BookshelfScene className="w-full h-full" />
+        {/* Soft atmospheric gradient overlay ensuring foreground text remains perfectly readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-100/40 via-cream-50/30 to-white/60 pointer-events-none" />
+      </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* FOREGROUND MAIN CONTENT */}
+      <div className="relative z-10 space-y-20 pb-16">
+        {/* 1. HERO SECTION */}
+        <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden border-b border-cream-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Pill Tag */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-800 text-xs font-bold tracking-wide shadow-sm">
@@ -538,6 +541,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };
