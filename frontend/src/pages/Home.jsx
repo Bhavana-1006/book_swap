@@ -28,7 +28,6 @@ import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
 import { CATEGORIES_DATA } from '../utils/categories';
 import { useAuth } from '../context/AuthContext';
-import { FlowingHeroBooks } from '../components/FlowingHeroBooks';
 import { BookshelfScene } from '../shaders/bookshelf/BookshelfScene';
 
 const Home = () => {
@@ -84,88 +83,77 @@ const Home = () => {
   };
 
   return (
-    <div className="space-y-16 pb-16 overflow-x-hidden">
-      {/* 1. HERO SECTION WITH FLOWING 3D EDUCATIONAL BOOKS STREAM */}
-      <section className="relative pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden bg-gradient-to-b from-[#FDFBF7] via-cream-50 to-[#F5EFE1] border-b border-cream-200/80">
-        {/* Flowing animated educational books from shelves background */}
-        <FlowingHeroBooks />
+    <div className="space-y-20 pb-16">
+      {/* 1. HERO SECTION WITH 3D EDUCATIONAL BOOKSHELF ANIMATION */}
+      <section className="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100 via-cream-50 to-white border-b border-cream-200">
+        {/* BookshelfScene 3D background inside Hero section */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85" aria-hidden="true">
+          <BookshelfScene className="w-full h-full" />
+          {/* Smooth atmospheric fade for natural text readability without any box */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-50/90 via-cream-50/40 to-white/80 pointer-events-none" />
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="max-w-3xl mx-auto text-center space-y-5">
+            {/* Pill Tag */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold tracking-wide shadow-sm">
+              <Sparkles className="w-4 h-4 text-brand-600" />
+              <span>Campus Book Exchange & Second-Hand Marketplace</span>
+            </div>
+
             {/* Main Heading & Tagline */}
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-[#12343B] tracking-tight leading-[1.12]">
-              Give Books a <span className="text-[#0F4C5C]">Second Life</span>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 tracking-tight leading-[1.15]">
+              Give Books a <span className="text-brand-600">Second Life</span>.
             </h1>
 
-            {/* Supporting Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl text-[#243B42] font-medium leading-relaxed max-w-2xl mx-auto">
-              Buy, Sell, Donate or Swap books and make learning more accessible for everyone.
+            {/* Supporting Text - Pure typography, no box container */}
+            <p className="text-base sm:text-lg md:text-xl text-navy-900 font-medium leading-relaxed max-w-2xl mx-auto">
+              Buy, sell, donate, or swap college textbooks directly with fellow students. Save up to 80% on semester coursework and keep academic resources in circulation.
             </p>
 
-            {/* 4 Floating Educational Category Cards (Inspired by Mockup) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 pt-4 max-w-4xl mx-auto">
-              <Link
-                to="/browse?category=10th%20Class"
-                className="group p-4 rounded-2xl bg-white/95 hover:bg-white border border-cream-200/90 shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all flex flex-col items-center text-center backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 rounded-xl bg-[#0F4C5C]/10 text-[#0F4C5C] group-hover:bg-[#0F4C5C] group-hover:text-white flex items-center justify-center transition-colors mb-2.5">
-                  <GraduationCap className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif text-sm font-bold text-[#12343B] group-hover:text-[#0F4C5C] transition-colors">
-                  10th Class
-                </h3>
-                <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1">Mathematics • Science • SST • English</p>
-                <ArrowRight className="w-4 h-4 text-[#0F4C5C] mt-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                to="/browse?category=Intermediate"
-                className="group p-4 rounded-2xl bg-white/95 hover:bg-white border border-cream-200/90 shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all flex flex-col items-center text-center backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 group-hover:bg-amber-600 group-hover:text-white flex items-center justify-center transition-colors mb-2.5">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif text-sm font-bold text-[#12343B] group-hover:text-amber-700 transition-colors">
-                  Intermediate
-                </h3>
-                <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1">MPC • BiPC • Maths • Physics • Chem</p>
-                <ArrowRight className="w-4 h-4 text-amber-600 mt-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                to="/browse?category=Medical"
-                className="group p-4 rounded-2xl bg-white/95 hover:bg-white border border-cream-200/90 shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all flex flex-col items-center text-center backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white flex items-center justify-center transition-colors mb-2.5">
-                  <Stethoscope className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif text-sm font-bold text-[#12343B] group-hover:text-emerald-700 transition-colors">
-                  Medical
-                </h3>
-                <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1">Anatomy • Physiology • Medical Science</p>
-                <ArrowRight className="w-4 h-4 text-emerald-600 mt-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                to="/browse?category=Engineering"
-                className="group p-4 rounded-2xl bg-white/95 hover:bg-white border border-cream-200/90 shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all flex flex-col items-center text-center backdrop-blur-sm"
-              >
-                <div className="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-700 group-hover:bg-blue-700 group-hover:text-white flex items-center justify-center transition-colors mb-2.5">
-                  <Cpu className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif text-sm font-bold text-[#12343B] group-hover:text-blue-700 transition-colors">
-                  Engineering
-                </h3>
-                <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1">CS • AI/ML • Data Structures • DBMS</p>
-                <ArrowRight className="w-4 h-4 text-blue-600 mt-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
+            {/* Action Buttons - Distinct from Navbar (no duplicate Login/Register buttons) */}
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <span>Go to Dashboard</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    to="/browse"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
+                  >
+                    Explore Books
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/browse"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <span>Explore Books</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    to="/nearby"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all flex items-center gap-2"
+                  >
+                    <MapPin className="w-4 h-4 text-emerald-600" />
+                    <span>Books Near Me</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Search Bar */}
-            <div className="pt-3 max-w-2xl mx-auto">
+            <div className="pt-6 max-w-2xl mx-auto">
               <form
                 onSubmit={handleSearch}
-                className="relative flex items-center bg-white p-2 rounded-2xl shadow-hover border border-cream-300 focus-within:ring-2 focus-within:ring-[#0F4C5C]"
+                className="relative flex items-center bg-white p-2 rounded-2xl shadow-hover border border-cream-300 focus-within:ring-2 focus-within:ring-brand-500"
               >
                 <Search className="w-5 h-5 text-gray-400 ml-3 mr-2 flex-shrink-0" />
                 <input
@@ -177,64 +165,13 @@ const Home = () => {
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#12343B] hover:bg-[#0F4C5C] text-white text-xs sm:text-sm font-bold transition-colors flex-shrink-0"
+                  className="px-6 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-bold transition-colors flex-shrink-0"
                 >
                   Search
                 </button>
               </form>
             </div>
           </div>
-        </div>
-
-        {/* Bottom Trust Feature Highlights Ribbon */}
-        <div className="mt-14 pt-8 border-t border-cream-300/60 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0 border border-emerald-200">
-                <Repeat className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h4 className="text-xs font-bold text-[#12343B]">Sustainable Learning</h4>
-                <p className="text-[11px] text-gray-500">Reduce waste, give books a new home</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0 border border-blue-200">
-                <Users className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h4 className="text-xs font-bold text-[#12343B]">Build a Community</h4>
-                <p className="text-[11px] text-gray-500">Connect with students and learners</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-teal-50 text-teal-700 flex items-center justify-center flex-shrink-0 border border-teal-200">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h4 className="text-xs font-bold text-[#12343B]">Safe & Trusted</h4>
-                <p className="text-[11px] text-gray-500">Verified users and secure transactions</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 border border-amber-200">
-                <BookOpen className="w-5 h-5" />
-              </div>
-              <div className="text-left">
-                <h4 className="text-xs font-bold text-[#12343B]">Affordable Education</h4>
-                <p className="text-[11px] text-gray-500">Quality books at better prices</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave Accent Ribbon */}
-        <div className="mt-8 pt-4 flex items-center justify-center gap-2 text-center text-xs font-semibold text-[#0F4C5C]/80">
-          <BookOpen className="w-4 h-4 text-[#D6A756]" />
-          <span>Better Books • Brighter Futures</span>
         </div>
       </section>
 
