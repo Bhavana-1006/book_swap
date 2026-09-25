@@ -11,11 +11,13 @@ import {
   Save,
   X,
   Upload,
-  BookOpen
+  BookOpen,
+  Lock
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import PasswordStrengthIndicator, { checkPasswordCriteria } from '../components/PasswordStrengthIndicator';
 
 const Profile = () => {
   const { user, updateProfile, refreshUser } = useAuth();
@@ -29,9 +31,51 @@ const Profile = () => {
   const [avatarPreview, setAvatarPreview] = useState('');
   const [saving, setSaving] = useState(false);
 
+  // Password change state
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [changingPassword, setChangingPassword] = useState(false);
+
   // Reviews state
   const [reviewsData, setReviewsData] = useState({ reviews: [], averageRating: 0, count: 0 });
   const [loadingReviews, setLoadingReviews] = useState(true);
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    const { isValid, criteria, isMatch } = checkPasswordCriteria(newPassword, confirmNewPassword);
+
+    if (!criteria.length || !criteria.uppercase || !criteria.lowercase || !criteria.number || !criteria.special) {
+      error('New password must meet all 5 criteria (8+ chars, uppercase, lowercase, number, symbol)');
+      return;
+    }
+
+    if (!isMatch) {
+      error('New passwords do not match');
+      return;
+    }
+
+    setChangingPassword(true);
+    try {
+      const res = await api.put('/api/auth/change-password', {
+        currentPassword,
+        newPassword,
+        confirmPassword: confirmNewPassword
+      });
+
+      if (res.data.success) {
+        success('Password changed successfully!');
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
+      }
+    } catch (err) {
+      error(err.response?.data?.message || err.message || 'Failed to change password');
+    } finally {
+      setChangingPassword(false);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -185,6 +229,74 @@ const Profile = () => {
             <span className="text-[11px] text-gray-400">({reviewsData.count} reviews)</span>
           </div>
         </div>
+      </div>
+
+      {/* Change Password Card (Phase 4 Security) */}
+      <div className="bg-white rounded-3xl border border-cream-200 p-6 sm:p-8 shadow-soft space-y-5">
+        <div>
+          <h3 className="font-serif text-xl font-bold text-navy-900 flex items-center gap-2">
+            <Lock className="w-5 h-5 text-brand-600" />
+            <span>Account Security & Password</span>
+          </h3>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Update your password to keep your student account protected
+          </p>
+        </div>
+
+        <form onSubmit={handleChangePassword} className="space-y-4 max-w-md">
+          <div>
+            <label className="block text-xs font-bold text-navy-900 mb-1">
+              Current Password <span className="text-rose-500">*</span>
+            </label>
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-bold text-navy-900 mb-1">
+                New Password <span className="text-rose-500">*</span>
+              </label>
+              <input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Min 8 chars"
+                required
+                className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-navy-900 mb-1">
+                Confirm New Password <span className="text-rose-500">*</span>
+              </label>
+              <input
+                type="password"
+                value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                placeholder="Repeat new password"
+                required
+                className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              />
+            </div>
+          </div>
+
+          <PasswordStrengthIndicator password={newPassword} confirmPassword={confirmNewPassword} />
+
+          <button
+            type="submit"
+            disabled={changingPassword}
+            className="px-5 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs shadow-soft transition-all disabled:opacity-50"
+          >
+            {changingPassword ? 'Updating Password...' : 'Update Password'}
+          </button>
+        </form>
       </div>
 
       {/* Received Reviews Section */}
