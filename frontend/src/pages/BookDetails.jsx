@@ -241,41 +241,18 @@ const BookDetails = () => {
 
       {/* 2. Main Grid: Left Interactive Showcase + Right Details */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        {/* Left Column: Interactive Image Gallery (5 cols) */}
+        {/* Left Column: Premium Single Book Showcase (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Angle Switcher Pills */}
-          {images.length > 1 && (
-            <div className="flex items-center gap-1.5 p-1 bg-cream-100 rounded-2xl border border-cream-200 overflow-x-auto">
-              {images.slice(0, 4).map((_, idx) => {
-                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
-                const isSelected = activeImageIndex === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-xl text-[11px] font-bold transition-all truncate text-center ${
-                      isSelected
-                        ? 'bg-white text-navy-900 shadow-sm border border-cream-200 font-extrabold'
-                        : 'text-gray-600 hover:text-navy-900'
-                    }`}
-                  >
-                    {label.short}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
           {/* Main Showcase Image Container */}
           <div
-            onClick={() => images.length > 0 && setLightboxOpen(true)}
+            onClick={() => coverImg && setLightboxOpen(true)}
             className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 border border-cream-200 overflow-hidden shadow-hover group cursor-zoom-in"
-            title="Click to zoom image"
+            title="Click to zoom cover"
           >
-            {images.length > 0 ? (
+            {coverImg ? (
               <img
-                src={images[activeImageIndex] || images[0]}
-                alt={`${book.title} - ${IMAGE_ANGLE_LABELS[activeImageIndex]?.title || 'View'}`}
+                src={coverImg}
+                alt={book.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -289,28 +266,8 @@ const BookDetails = () => {
               </div>
             )}
 
-            {/* Next / Prev Image Hover Controls */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
-                  title="Previous image"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
-                  title="Next image"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-
             {/* Zoom Icon Badge */}
-            <div className="absolute top-4 right-4 p-2 rounded-xl bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all shadow-md z-10 flex items-center gap-1 text-[11px] font-bold">
+            <div className="absolute top-4 right-4 p-2 rounded-xl bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all shadow-md z-10 flex items-center gap-1.5 text-[11px] font-bold">
               <Maximize2 className="w-3.5 h-3.5" />
               <span>Zoom</span>
             </div>
@@ -337,45 +294,11 @@ const BookDetails = () => {
               )}
             </div>
 
-            {/* Current Active Angle Indicator Ribbon */}
-            <div className="absolute bottom-4 left-4 px-3 py-1 rounded-xl text-xs font-bold bg-navy-900/85 text-white shadow-sm backdrop-blur-sm z-10 flex items-center gap-1.5">
-              <Eye className="w-3.5 h-3.5 text-amber-400" />
-              <span>{IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}</span>
-            </div>
-
             {/* Condition badge */}
             <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 text-navy-900 shadow-sm border border-cream-200 backdrop-blur-sm z-10">
               Condition: {book.condition}
             </div>
           </div>
-
-          {/* Thumbnail Gallery Strip */}
-          {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2 pt-1">
-              {images.slice(0, 4).map((img, idx) => {
-                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
-                const isSelected = activeImageIndex === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative rounded-2xl overflow-hidden border-2 transition-all flex flex-col items-center bg-cream-100 ${
-                      isSelected
-                        ? 'border-brand-600 shadow-md scale-105 ring-2 ring-brand-500/20'
-                        : 'border-cream-300 opacity-75 hover:opacity-100'
-                    }`}
-                  >
-                    <div className="aspect-[3/4] w-full">
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </div>
-                    <span className="w-full py-0.5 text-[9px] font-bold text-center bg-navy-900/90 text-white truncate px-1">
-                      {label.short}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
 
           {/* Verified Protection Guarantee */}
           <div className="p-4 rounded-2xl bg-cream-50 border border-cream-200/80 flex items-center gap-3">
@@ -701,9 +624,9 @@ const BookDetails = () => {
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fade-in"
         >
           {/* Top toolbar */}
-          <div className="w-full max-w-5xl flex items-center justify-between text-white mb-3 px-2">
-            <span className="text-sm font-bold">
-              {book.title} — {IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}
+          <div className="w-full max-w-4xl flex items-center justify-between text-white mb-3 px-2">
+            <span className="text-sm font-bold truncate">
+              {book.title} — Textbook Cover Preview
             </span>
             <button
               onClick={() => setLightboxOpen(false)}
@@ -716,51 +639,14 @@ const BookDetails = () => {
           {/* Main modal image */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-4xl max-h-[80vh] flex items-center justify-center"
+            className="relative max-w-2xl max-h-[85vh] flex items-center justify-center"
           >
             <img
-              src={images[activeImageIndex] || images[0]}
+              src={coverImg}
               alt={book.title}
-              className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
             />
-
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
-                >
-                  <ChevronLeft className="w-7 h-7" />
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
-                >
-                  <ChevronRight className="w-7 h-7" />
-                </button>
-              </>
-            )}
           </div>
-
-          {/* Angle switcher in lightbox */}
-          {images.length > 1 && (
-            <div className="flex gap-2 mt-4 overflow-x-auto">
-              {images.slice(0, 4).map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveImageIndex(idx);
-                  }}
-                  className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                    activeImageIndex === idx ? 'border-amber-400 scale-105' : 'border-white/30 opacity-60'
-                  }`}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       )}
 
