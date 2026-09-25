@@ -56,6 +56,16 @@ if (process.env.NODE_ENV !== 'production') {
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Root welcome route for browser visitors
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'BookSwap Campus Marketplace API is running!',
+    status: 'online',
+    healthCheck: '/api/health',
+    version: '1.0.0'
+  });
+});
+
 // Health check endpoint (Mandatory requirement from Section 3)
 app.get('/api/health', (req, res) => {
   const mongoose = require('mongoose');
