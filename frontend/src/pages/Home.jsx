@@ -85,29 +85,29 @@ const Home = () => {
   return (
     <div className="space-y-20 pb-16">
       {/* 1. HERO SECTION WITH 3D EDUCATIONAL BOOKSHELF ANIMATION */}
-      <section className="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100 via-cream-50 to-white border-b border-cream-200">
+      <section className="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100 via-cream-50 to-white dark:from-[#081316] dark:via-[#0b191d] dark:to-[#0f2228] border-b border-cream-200 dark:border-[#1c3842]">
         {/* BookshelfScene 3D background inside Hero section */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85" aria-hidden="true">
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85 dark:opacity-60" aria-hidden="true">
           <BookshelfScene className="w-full h-full" />
           {/* Smooth atmospheric fade for natural text readability without any box */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cream-50/90 via-cream-50/40 to-white/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-50/90 via-cream-50/40 to-white/80 dark:from-[#081316]/90 dark:via-[#0b191d]/60 dark:to-[#0f2228]/90 pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-5">
             {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold tracking-wide shadow-sm">
-              <Sparkles className="w-4 h-4 text-brand-600" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 dark:bg-amber-950/40 border border-brand-200 dark:border-amber-700/50 text-brand-800 dark:text-amber-300 text-xs font-bold tracking-wide shadow-sm">
+              <Sparkles className="w-4 h-4 text-brand-600 dark:text-amber-400" />
               <span>Campus Book Exchange & Second-Hand Marketplace</span>
             </div>
 
             {/* Main Heading & Tagline */}
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 tracking-tight leading-[1.15]">
-              Give Books a <span className="text-brand-600">Second Life</span>.
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 dark:text-white tracking-tight leading-[1.15]">
+              Give Books a <span className="text-brand-600 dark:text-amber-400">Second Life</span>.
             </h1>
 
             {/* Supporting Text - Pure typography, no box container */}
-            <p className="text-base sm:text-lg md:text-xl text-navy-900 font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-navy-900 dark:text-slate-200 font-medium leading-relaxed max-w-2xl mx-auto">
               Buy, sell, donate, or swap college textbooks directly with fellow students. Save up to 80% on semester coursework and keep academic resources in circulation.
             </p>
 
@@ -117,14 +117,14 @@ const Home = () => {
                 <>
                   <Link
                     to="/dashboard"
-                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white dark:text-navy-950 font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
                   >
                     <span>Go to Dashboard</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
                     to="/browse"
-                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 dark:bg-[#14282f] dark:hover:bg-[#1a353e] text-navy-900 dark:text-white border border-cream-300 dark:border-[#21434c] font-bold text-sm shadow-soft transition-all"
                   >
                     Explore Books
                   </Link>
@@ -133,16 +133,16 @@ const Home = () => {
                 <>
                   <Link
                     to="/browse"
-                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white dark:text-navy-950 font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
                   >
                     <span>Explore Books</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
                     to="/nearby"
-                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all flex items-center gap-2"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 dark:bg-[#14282f] dark:hover:bg-[#1a353e] text-navy-900 dark:text-white border border-cream-300 dark:border-[#21434c] font-bold text-sm shadow-soft transition-all flex items-center gap-2"
                   >
-                    <MapPin className="w-4 h-4 text-emerald-600" />
+                    <MapPin className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Books Near Me</span>
                   </Link>
                 </>
@@ -153,19 +153,19 @@ const Home = () => {
             <div className="pt-6 max-w-2xl mx-auto">
               <form
                 onSubmit={handleSearch}
-                className="relative flex items-center bg-white p-2 rounded-2xl shadow-hover border border-cream-300 focus-within:ring-2 focus-within:ring-brand-500"
+                className="relative flex items-center bg-white dark:bg-[#12242a] p-2 rounded-2xl shadow-hover border border-cream-300 dark:border-[#21434c] focus-within:ring-2 focus-within:ring-brand-500 dark:focus-within:ring-amber-400"
               >
-                <Search className="w-5 h-5 text-gray-400 ml-3 mr-2 flex-shrink-0" />
+                <Search className="w-5 h-5 text-gray-400 dark:text-slate-400 ml-3 mr-2 flex-shrink-0" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search books, authors, ISBN, course names..."
-                  className="w-full py-2 bg-transparent text-sm sm:text-base text-navy-900 focus:outline-none placeholder-gray-400 font-medium"
+                  className="w-full py-2 bg-transparent text-sm sm:text-base text-navy-900 dark:text-white focus:outline-none placeholder-gray-400 dark:placeholder-slate-400 font-medium"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-bold transition-colors flex-shrink-0"
+                  className="px-6 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 dark:bg-amber-500 dark:hover:bg-amber-600 text-white dark:text-navy-950 text-xs sm:text-sm font-bold transition-colors flex-shrink-0"
                 >
                   Search
                 </button>

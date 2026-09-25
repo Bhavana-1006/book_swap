@@ -44,9 +44,9 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
   const coverImg = book.images && book.images.length > 0 ? book.images[0] : null;
 
   return (
-    <div className="group relative bg-white rounded-2xl border border-cream-200 overflow-hidden shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+    <div className="group relative bg-white dark:bg-[#132428] rounded-2xl border border-cream-200 dark:border-[#21434c] overflow-hidden shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
       {/* Cover Image Container */}
-      <div className="relative aspect-[4/3] w-full bg-cream-100 overflow-hidden">
+      <div className="relative aspect-[4/3] w-full bg-cream-100 dark:bg-[#0f1d20] overflow-hidden">
         {coverImg ? (
           <img
             src={coverImg}
@@ -58,16 +58,16 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
             }}
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-cream-100">
-            <BookOpen className="w-12 h-12 text-cream-300 mb-1" />
-            <span className="text-xs font-medium text-gray-500">Textbook Cover</span>
+          <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-cream-100 dark:bg-[#0f1d20]">
+            <BookOpen className="w-12 h-12 text-cream-300 dark:text-[#21434c] mb-1" />
+            <span className="text-xs font-medium text-gray-500 dark:text-slate-400">Textbook Cover</span>
           </div>
         )}
 
         {/* Listing Type & Price Badge */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 items-center z-10">
           {book.listingType === 'SELL' && (
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-navy-900 text-white shadow-sm flex items-center gap-1">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-navy-900 dark:bg-navy-950 text-white shadow-sm flex items-center gap-1 border border-white/10">
               <span>Sell</span>
               <span className="text-amber-400 font-extrabold">{formatPrice(book.price, 'SELL')}</span>
             </span>
@@ -103,7 +103,7 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
           className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all z-10 shadow-sm ${
             inWishlist
               ? 'bg-rose-500 text-white hover:bg-rose-600'
-              : 'bg-white/80 text-gray-600 hover:text-rose-500 hover:bg-white'
+              : 'bg-white/85 dark:bg-[#12242a]/90 text-gray-600 dark:text-slate-300 hover:text-rose-500 hover:bg-white'
           }`}
           title={inWishlist ? 'Remove from Wishlist' : 'Save to Wishlist'}
         >
@@ -112,7 +112,7 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
 
         {/* Condition Ribbon */}
         <div className="absolute bottom-2 right-2">
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white/90 text-navy-800 backdrop-blur-sm border border-cream-200">
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white/90 dark:bg-[#12242a]/90 text-navy-800 dark:text-slate-200 backdrop-blur-sm border border-cream-200 dark:border-[#21434c]">
             {book.condition}
           </span>
         </div>
@@ -122,27 +122,27 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
       <div className="p-4 flex-1 flex flex-col justify-between">
         <div>
           {/* Subject & Semester */}
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-brand-700 uppercase tracking-wider mb-1.5">
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-brand-700 dark:text-amber-400 uppercase tracking-wider mb-1.5">
             <span className="truncate max-w-[150px]">{book.subject}</span>
             <span>•</span>
-            <span className="text-gray-500">{book.semester}</span>
+            <span className="text-gray-500 dark:text-slate-400">{book.semester}</span>
           </div>
 
           {/* Book Title */}
           <Link to={`/book/${book._id}`}>
-            <h3 className="font-serif text-base font-bold text-navy-900 group-hover:text-brand-600 transition-colors line-clamp-2 leading-snug">
+            <h3 className="font-serif text-base font-bold text-navy-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2 leading-snug">
               {book.title}
             </h3>
           </Link>
 
           {/* Author */}
-          <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 line-clamp-1">
             by {book.author}
           </p>
 
           {/* Seller / Owner info */}
-          <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-600">
-            <User className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+          <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-600 dark:text-slate-300">
+            <User className="w-3.5 h-3.5 text-gray-400 dark:text-slate-400 flex-shrink-0" />
             <span className="truncate font-medium">
               Seller: {book.owner?.name || 'Campus Student'}
             </span>
@@ -150,7 +150,7 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
 
           {/* Swap Preference Snippet if SWAP */}
           {book.listingType === 'SWAP' && book.swapPreferences && (
-            <div className="mt-2 p-2 rounded-lg bg-accent-50/70 border border-accent-100 text-[11px] text-accent-800 line-clamp-1">
+            <div className="mt-2 p-2 rounded-lg bg-accent-50/70 dark:bg-amber-950/30 border border-accent-100 dark:border-amber-800/40 text-[11px] text-accent-800 dark:text-amber-300 line-clamp-1">
               <span className="font-semibold">Seeking:</span> {book.swapPreferences}
             </div>
           )}
@@ -158,14 +158,14 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
 
         <div>
           {/* Location & College */}
-          <div className="pt-2.5 mt-2.5 border-t border-cream-200/80 flex items-center justify-between text-[11px] text-gray-500">
+          <div className="pt-2.5 mt-2.5 border-t border-cream-200/80 dark:border-[#21434c] flex items-center justify-between text-[11px] text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-1 truncate max-w-[140px]" title={book.location?.city || book.owner?.city}>
-              <MapPin className="w-3 h-3 text-gray-400 flex-shrink-0" />
+              <MapPin className="w-3 h-3 text-gray-400 dark:text-slate-400 flex-shrink-0" />
               <span className="truncate">{book.location?.city || book.owner?.city || 'Campus'}</span>
             </div>
 
             {book.owner?.college && (
-              <span className="truncate max-w-[130px] text-gray-400 font-medium" title={book.owner.college}>
+              <span className="truncate max-w-[130px] text-gray-400 dark:text-slate-400 font-medium" title={book.owner.college}>
                 {book.owner.college}
               </span>
             )}
@@ -174,7 +174,7 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
           {/* View Details Action Button */}
           <Link
             to={`/book/${book._id}`}
-            className="mt-3 w-full py-2 px-3 rounded-xl bg-cream-100/80 hover:bg-navy-900 text-navy-800 hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 group/btn"
+            className="mt-3 w-full py-2 px-3 rounded-xl bg-cream-100/80 dark:bg-[#18333b] hover:bg-navy-900 dark:hover:bg-amber-500 text-navy-800 dark:text-slate-100 hover:text-white dark:hover:text-navy-950 text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 group/btn"
           >
             <span>View Details</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />

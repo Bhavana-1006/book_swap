@@ -3,8 +3,21 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
-    @apply bg-cream-50 text-navy-800 antialiased font-sans;
+    @apply bg-cream-50 text-navy-800 antialiased font-sans transition-colors duration-200;
+  }
+
+  html.dark body {
+    background-color: #0b171a;
+    color: #f1f5f9;
   }
 
   h1, h2, h3, .font-serif {
@@ -28,6 +41,16 @@
   background: #94a3b8;
 }
 
+html.dark ::-webkit-scrollbar-track {
+  background: #0b171a;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #21434c;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2d5864;
+}
+
 @keyframes slideIn {
   from {
     transform: translateY(16px);
@@ -43,15 +66,96 @@
   animation: slideIn 0.25s ease-out forwards;
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism utilities */
 .glass-nav {
-  background: rgba(250, 248, 245, 0.85);
+  background: rgba(250, 248, 245, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+html.dark .glass-nav {
+  background: rgba(11, 23, 26, 0.88) !important;
+  border-color: rgba(33, 67, 76, 0.8) !important;
+}
+
 .glass-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+html.dark .glass-card {
+  background: rgba(19, 36, 40, 0.88) !important;
+  border-color: rgba(33, 67, 76, 0.7) !important;
+  color: #f1f5f9 !important;
+}
+
+/* Global Dark Mode High-Contrast Clarity Overrides */
+html.dark .bg-white {
+  background-color: #132428 !important;
+  color: #f1f5f9;
+}
+
+html.dark .bg-cream-50 {
+  background-color: #0b171a !important;
+}
+
+html.dark .bg-cream-100 {
+  background-color: #162a30 !important;
+}
+
+html.dark .bg-cream-200 {
+  background-color: #1c3842 !important;
+}
+
+html.dark .bg-cream-300 {
+  background-color: #21434c !important;
+}
+
+html.dark .text-navy-950,
+html.dark .text-navy-900,
+html.dark .text-navy-800,
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border-cream-200,
+html.dark .border-cream-300,
+html.dark .border-gray-200,
+html.dark .border-gray-100 {
+  border-color: #21434c !important;
+}
+
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #12242a !important;
+  color: #f8fafc !important;
+  border-color: #21434c !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark .shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .shadow-modal {
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.6) !important;
 }

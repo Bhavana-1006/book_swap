@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -31,11 +32,12 @@ import Unauthorized from './pages/Unauthorized';
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <ToastProvider>
-          <div className="min-h-screen flex flex-col bg-cream-50 text-navy-800 antialiased font-sans">
-            <Navbar />
-            <main className="flex-1">
+      <ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <div className="min-h-screen flex flex-col bg-cream-50 dark:bg-[#0b171a] text-navy-800 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+              <Navbar />
+              <main className="flex-1">
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
@@ -132,6 +134,7 @@ function App() {
           </div>
         </ToastProvider>
       </AuthProvider>
+    </ThemeProvider>
     </Router>
   );
 }

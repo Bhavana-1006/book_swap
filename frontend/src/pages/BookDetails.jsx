@@ -245,7 +245,7 @@ const BookDetails = () => {
         <div className="lg:col-span-5 space-y-4">
           {/* Angle Switcher Pills */}
           {images.length > 1 && (
-            <div className="flex items-center gap-1.5 p-1 bg-cream-100 rounded-2xl border border-cream-200 overflow-x-auto">
+            <div className="flex items-center gap-1.5 p-1 bg-cream-100 dark:bg-[#12242a] rounded-2xl border border-cream-200 dark:border-[#21434c] overflow-x-auto">
               {images.slice(0, 4).map((_, idx) => {
                 const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
                 const isSelected = activeImageIndex === idx;
@@ -255,8 +255,8 @@ const BookDetails = () => {
                     onClick={() => setActiveImageIndex(idx)}
                     className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-xl text-[11px] font-bold transition-all truncate text-center ${
                       isSelected
-                        ? 'bg-white text-navy-900 shadow-sm border border-cream-200 font-extrabold'
-                        : 'text-gray-600 hover:text-navy-900'
+                        ? 'bg-white dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 shadow-sm border border-cream-200 dark:border-[#2a4e5a] font-extrabold'
+                        : 'text-gray-600 dark:text-slate-300 hover:text-navy-900 dark:hover:text-white'
                     }`}
                   >
                     {label.short}
@@ -269,7 +269,7 @@ const BookDetails = () => {
           {/* Main Showcase Image Container */}
           <div
             onClick={() => images.length > 0 && setLightboxOpen(true)}
-            className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 border border-cream-200 overflow-hidden shadow-hover group cursor-zoom-in"
+            className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 dark:bg-[#0f1d20] border border-cream-200 dark:border-[#21434c] overflow-hidden shadow-hover group cursor-zoom-in"
             title="Click to zoom image"
           >
             {images.length > 0 ? (
@@ -283,9 +283,9 @@ const BookDetails = () => {
                 }}
               />
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gradient-to-br from-cream-100 to-cream-200">
-                <BookOpen className="w-20 h-20 text-cream-300 mb-2" />
-                <span className="text-xs font-semibold text-navy-700">Academic Textbook Cover</span>
+              <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gradient-to-br from-cream-100 to-cream-200 dark:from-[#0f1d20] dark:to-[#162c33]">
+                <BookOpen className="w-20 h-20 text-cream-300 dark:text-[#21434c] mb-2" />
+                <span className="text-xs font-semibold text-navy-700 dark:text-slate-300">Academic Textbook Cover</span>
               </div>
             )}
 
@@ -344,7 +344,7 @@ const BookDetails = () => {
             </div>
 
             {/* Condition badge */}
-            <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 text-navy-900 shadow-sm border border-cream-200 backdrop-blur-sm z-10">
+            <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 dark:bg-[#12242a]/95 text-navy-900 dark:text-slate-200 shadow-sm border border-cream-200 dark:border-[#21434c] backdrop-blur-sm z-10">
               Condition: {book.condition}
             </div>
           </div>
@@ -359,16 +359,24 @@ const BookDetails = () => {
                   <button
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative rounded-2xl overflow-hidden border-2 transition-all flex flex-col items-center bg-cream-100 ${
+                    className={`relative rounded-2xl overflow-hidden border-2 transition-all aspect-[4/3] bg-cream-100 dark:bg-[#12242a] group/thumb ${
                       isSelected
-                        ? 'border-brand-600 shadow-md scale-105 ring-2 ring-brand-500/20'
-                        : 'border-cream-300 opacity-75 hover:opacity-100'
+                        ? 'border-brand-600 dark:border-amber-400 ring-2 ring-brand-500/30 shadow-md scale-[1.02]'
+                        : 'border-cream-200 dark:border-[#21434c] hover:border-brand-400 opacity-75 hover:opacity-100'
                     }`}
                   >
-                    <div className="aspect-[3/4] w-full">
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </div>
-                    <span className="w-full py-0.5 text-[9px] font-bold text-center bg-navy-900/90 text-white truncate px-1">
+                    <img
+                      src={img}
+                      alt={label.short}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80';
+                      }}
+                    />
+                    <span className={`absolute inset-x-0 bottom-0 py-0.5 text-[9px] font-bold text-center truncate px-1 transition-colors ${
+                      isSelected ? 'bg-brand-600 dark:bg-amber-500 text-white dark:text-navy-950 font-black' : 'bg-navy-900/80 text-white'
+                    }`}>
                       {label.short}
                     </span>
                   </button>
