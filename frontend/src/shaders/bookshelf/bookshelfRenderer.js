@@ -23,25 +23,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Secondary Education",
     "note": "Algebra, coordinate geometry, and trigonometry.",
     "deck": "Comprehensive secondary mathematics curriculum covering polynomials, quadratic equations, coordinate geometry, and trigonometry.",
-    "binding": "Navy cloth · burnished gold foil",
+    "binding": "Deep teal cloth · warm gold foil",
     "format": "150 × 220 mm · academic edition",
     "theme": "10th Class · Mathematics",
     "motif": "Geometric compass",
     "motifKey": "compass",
-    "paletteLabel": "Navy · ivory · gold",
-    "color": "#1b2a4a",
-    "foil": "#e6c670",
+    "paletteLabel": "Deep teal · ivory · warm gold",
+    "color": "#0F4C5C",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#171a24",
-      "paperDeep": "#10131b",
-      "paperPale": "#f5f0e8",
-      "ink": "#1a1f2c",
-      "inkSoft": "#718096",
-      "wall": "#171a24",
+      "paper": "#12343B",
+      "paperDeep": "#0B2227",
+      "paperPale": "#F8F3E7",
+      "ink": "#0B2227",
+      "inkSoft": "#5A7261",
+      "wall": "#12343B",
       "shelf": "#3a2118",
       "shelfDark": "#1c0e0a",
-      "light": "#fbf3ea",
-      "fill": "#9fb3c9"
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
     },
     "width": 1.02,
     "height": 1.58,
@@ -60,25 +60,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "General Science",
     "note": "Physics, chemistry, and biology fundamentals.",
     "deck": "Core foundation science textbook covering chemical reactions, life processes, electricity, and magnetic effects.",
-    "binding": "Forest emerald cloth · warm bronze foil",
+    "binding": "Muted sage cloth · warm gold foil",
     "format": "156 × 228 mm · academic edition",
     "theme": "10th Class · Science",
     "motif": "Cellular modules",
     "motifKey": "modules",
-    "paletteLabel": "Forest emerald · cream · bronze",
-    "color": "#164e43",
-    "foil": "#e2b868",
+    "paletteLabel": "Muted sage · soft cream · gold",
+    "color": "#5A7261",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#133e36",
-      "paperDeep": "#0d2b25",
-      "paperPale": "#eef7f4",
-      "ink": "#122a24",
-      "inkSoft": "#537e73",
-      "wall": "#133e36",
+      "paper": "#395648",
+      "paperDeep": "#24372E",
+      "paperPale": "#F8F3E7",
+      "ink": "#12343B",
+      "inkSoft": "#6D7C66",
+      "wall": "#395648",
       "shelf": "#3b2418",
       "shelfDark": "#1c0f09",
-      "light": "#ebf7f3",
-      "fill": "#7fc4b4"
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
     },
     "width": 1.1,
     "height": 1.52,
@@ -97,25 +97,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Intermediate · MPC",
     "note": "Mechanics, thermodynamics, wave optics, and electrodynamics.",
     "deck": "Higher secondary physics textbook balancing theoretical principles with numerical problem-solving for competitive engineering prep.",
-    "binding": "Burgundy cloth · antique copper foil",
+    "binding": "Dark teal cloth · warm gold foil",
     "format": "152 × 224 mm · academic edition",
     "theme": "Intermediate · Physical Sciences",
     "motif": "Harmonic waveforms",
     "motifKey": "paths",
-    "paletteLabel": "Burgundy · blush · copper",
-    "color": "#6b1d2f",
-    "foil": "#e89a7a",
+    "paletteLabel": "Dark teal · cream · gold",
+    "color": "#12343B",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#541624",
-      "paperDeep": "#380d17",
-      "paperPale": "#fdf2f4",
-      "ink": "#2b0a12",
-      "inkSoft": "#8e4b5a",
-      "wall": "#541624",
+      "paper": "#0F4C5C",
+      "paperDeep": "#0B2227",
+      "paperPale": "#F8F3E7",
+      "ink": "#0B2227",
+      "inkSoft": "#5A7261",
+      "wall": "#0F4C5C",
       "shelf": "#402015",
       "shelfDark": "#1d0d08",
-      "light": "#fae8ec",
-      "fill": "#d97d91"
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
     },
     "width": 0.98,
     "height": 1.56,
@@ -134,25 +134,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Intermediate · BiPC & MPC",
     "note": "Organic reaction mechanisms, stoichiometry, and kinetics.",
     "deck": "In-depth intermediate chemistry manual covering physical, inorganic, and organic chemistry structures and stoichiometry.",
-    "binding": "Sapphire cloth · sterling silver foil",
+    "binding": "Warm terracotta cloth · soft cream foil",
     "format": "162 × 242 mm · clinical edition",
     "theme": "Intermediate · Chemical Sciences",
     "motif": "Orbital resonance",
     "motifKey": "orbits",
-    "paletteLabel": "Sapphire · ice blue · silver",
-    "color": "#1e3a6d",
-    "foil": "#d8e5f2",
+    "paletteLabel": "Terracotta · cream · soft sage",
+    "color": "#824C3A",
+    "foil": "#F8F3E7",
     "palette": {
-      "paper": "#172d54",
-      "paperDeep": "#0f1f3b",
-      "paperPale": "#edf4fb",
-      "ink": "#0d1a30",
-      "inkSoft": "#5878a8",
-      "wall": "#172d54",
+      "paper": "#643324",
+      "paperDeep": "#421D12",
+      "paperPale": "#F8F3E7",
+      "ink": "#12343B",
+      "inkSoft": "#A8B5A2",
+      "wall": "#643324",
       "shelf": "#3b2117",
       "shelfDark": "#1a0d08",
-      "light": "#e6f0fa",
-      "fill": "#7aa4de"
+      "light": "#F8F3E7",
+      "fill": "#D6A756"
     },
     "width": 1.14,
     "height": 1.68,
@@ -171,25 +171,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Medical Science",
     "note": "Systemic anatomy, neuroanatomy, and clinical physiology.",
     "deck": "Standard medical reference volume detailing muscular, skeletal, neural, and cardiovascular structures with clinical correlations.",
-    "binding": "Slate obsidian cloth · electric teal foil",
+    "binding": "Slate teal cloth · warm gold foil",
     "format": "150 × 226 mm · clinical edition",
     "theme": "Medical · Human Anatomy",
     "motif": "Cellular systems",
     "motifKey": "frames",
-    "paletteLabel": "Obsidian · teal · parchment",
-    "color": "#1a2530",
-    "foil": "#4ed6c0",
+    "paletteLabel": "Slate teal · ivory · gold",
+    "color": "#184E59",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#131b24",
-      "paperDeep": "#0c1218",
-      "paperPale": "#f0f6f6",
-      "ink": "#0f171e",
-      "inkSoft": "#4b677d",
-      "wall": "#131b24",
+      "paper": "#12343B",
+      "paperDeep": "#0B2227",
+      "paperPale": "#F8F3E7",
+      "ink": "#0B2227",
+      "inkSoft": "#5A7261",
+      "wall": "#12343B",
       "shelf": "#362016",
       "shelfDark": "#180d09",
-      "light": "#e2f7f4",
-      "fill": "#589bb0"
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
     },
     "width": 1.04,
     "height": 1.54,
@@ -208,25 +208,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Engineering · CSE",
     "note": "Algorithms, time complexity, trees, graphs, and DP.",
     "deck": "Core textbook for engineering undergraduates on algorithmic problem solving, abstract data types, and computational efficiency.",
-    "binding": "Midnight violet cloth · rose gold foil",
+    "binding": "Forest sage cloth · radiant gold foil",
     "format": "154 × 230 mm · engineering edition",
     "theme": "Engineering · Computer Science",
     "motif": "Hierarchical trees",
     "motifKey": "brackets",
-    "paletteLabel": "Midnight violet · rose · gold",
-    "color": "#3b1e54",
-    "foil": "#f2b5a7",
+    "paletteLabel": "Forest sage · cream · gold",
+    "color": "#395648",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#2b153e",
-      "paperDeep": "#1c0d29",
-      "paperPale": "#f9f2fb",
-      "ink": "#1d0c2b",
-      "inkSoft": "#7d5596",
-      "wall": "#2b153e",
+      "paper": "#24372E",
+      "paperDeep": "#15231C",
+      "paperPale": "#F8F3E7",
+      "ink": "#12343B",
+      "inkSoft": "#A8B5A2",
+      "wall": "#24372E",
       "shelf": "#3a2018",
       "shelfDark": "#1a0e0a",
-      "light": "#fceee9",
-      "fill": "#b584d4"
+      "light": "#F8F3E7",
+      "fill": "#D6A756"
     },
     "width": 1.06,
     "height": 1.6,
@@ -245,25 +245,25 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "discipline": "Engineering · Applied Maths",
     "note": "Calculus, linear algebra, differential equations, and transforms.",
     "deck": "Advanced engineering mathematics textbook covering multivariable calculus, Fourier series, matrices, and differential equations.",
-    "binding": "Warm terracotta cloth · radiant amber foil",
+    "binding": "Warm amber gold cloth · soft cream foil",
     "format": "148 × 220 mm · engineering edition",
     "theme": "Engineering · Applied Mathematics",
     "motif": "Structured vectors",
     "motifKey": "caret",
-    "paletteLabel": "Terracotta · cream · amber",
-    "color": "#8a3a22",
-    "foil": "#fcd077",
+    "paletteLabel": "Warm gold · cream · dark teal",
+    "color": "#946E2B",
+    "foil": "#F8F3E7",
     "palette": {
-      "paper": "#6d2d1a",
-      "paperDeep": "#4b1e11",
-      "paperPale": "#fdf6ed",
-      "ink": "#38150a",
-      "inkSoft": "#a85f47",
-      "wall": "#6d2d1a",
+      "paper": "#6C4E1A",
+      "paperDeep": "#47320D",
+      "paperPale": "#F8F3E7",
+      "ink": "#12343B",
+      "inkSoft": "#5A7261",
+      "wall": "#6C4E1A",
       "shelf": "#402015",
       "shelfDark": "#1d0d08",
-      "light": "#fef3db",
-      "fill": "#df866a"
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
     },
     "width": 0.96,
     "height": 1.5,
@@ -4102,24 +4102,8 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     }
 
     async function initialize() {
-      const woodTexturePromise = woodTextureImage.decode().then(
-        () => true,
-        () => false
-      );
-
-      try {
-        await document.fonts.load("600 82px Inter");
-      } catch (error) {
-        // The system sans-serif fallback keeps the interface usable offline.
-      }
-
-      try {
-        await coverAtlasImage.decode();
-        coverAtlasReady = false;
-      } catch (error) {
-        coverAtlasReady = false;
-      }
-
+      coverAtlasReady = false;
+      woodTextureReady = false;
       if (destroyed) return;
 
       try {
@@ -4142,7 +4126,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       renderer.setClearColor(0x000000, 0);
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0xe9dfcb, 0.027);
+      scene.fog = new THREE.FogExp2(0xF8F3E7, 0.02);
       const pmremGenerator = new THREE.PMREMGenerator(renderer);
       environmentTarget = pmremGenerator.fromScene(new RoomEnvironment(), 0.04);
       scene.environment = environmentTarget.texture;

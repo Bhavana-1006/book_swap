@@ -717,7 +717,7 @@ img.sunset-valley-fallback {
 .bookshelf__canvas {
   position: absolute;
   inset: 0;
-  opacity: 0;
+  opacity: 1;
   touch-action: none;
 }
 

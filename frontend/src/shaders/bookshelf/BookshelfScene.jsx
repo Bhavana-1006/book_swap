@@ -5,7 +5,7 @@ import "../threeui.css";
 export function BookshelfScene({ className = "" }) {
   const hostRef = useRef(null);
   const canvasRef = useRef(null);
-  const [state, setState] = useState("loading");
+  const [state, setState] = useState("ready");
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
