@@ -54,10 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   // Register handler (supports multipart/form-data for optional avatar)
   const register = async (formData) => {
-    const config = {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    };
-    const res = await api.post('/api/auth/register', formData, config);
+    const res = await api.post('/api/auth/register', formData);
     if (res.data.success) {
       localStorage.setItem('bookswap_token', res.data.token);
       setToken(res.data.token);
@@ -76,10 +73,7 @@ export const AuthProvider = ({ children }) => {
 
   // Update profile
   const updateProfile = async (formData) => {
-    const config = {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    };
-    const res = await api.put('/api/users/profile', formData, config);
+    const res = await api.put('/api/users/profile', formData);
     if (res.data.success) {
       setUser((prev) => ({ ...prev, ...res.data.user }));
       return res.data;

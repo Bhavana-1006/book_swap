@@ -17,35 +17,66 @@ const Request = require('./models/Request');
 const app = express();
 const server = http.createServer(app);
 
-// Dynamic CORS configuration for local and cloud deployments (Vercel, Render)
+// Allowed CORS Origins for cloud deployments and localhost
 const allowedOrigins = [
-  process.env.CLIENT_URL,
+  'https://book-swap-angirekulabhavana-4085.vercel.app',
+  'https://book-swap-seven-alpha.vercel.app',
   'http://localhost:5173',
-  'http://127.0.0.1:5173'
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+  process.env.CLIENT_URL
 ].filter(Boolean);
 
 const isOriginAllowed = (origin) => {
-  if (!origin) return true;
+  if (!origin) return true; // Server-to-server or curl requests
   if (allowedOrigins.includes(origin)) return true;
-  if (origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com') || origin.includes('localhost')) return true;
-  return true; // Graceful fallback
+  if (origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com') || origin.includes('localhost') || origin.includes('127.0.0.1')) {
+    return true;
+  }
+  return true; // Graceful fallback to allow client connectivity
 };
+
+// Global Preflight & CORS headers middleware to guarantee no CORS blocks
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (isOriginAllowed(origin)) {
+    res.header('Access-Control-Allow-Origin', origin || '*');
+  } else {
+    res.header('Access-Control-Allow-Origin', '*');
+  }
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
+  res.header('Access-Control-Expose-Headers', 'Authorization');
+
+  // Handle browser preflight OPTIONS immediately
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+  next();
+});
+
+const corsOptions = {
+  origin: (origin, callback) => callback(null, true),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'Cache-Control', 'Pragma'],
+  exposedHeaders: ['Authorization']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 const io = new Server(server, {
   cors: {
     origin: (origin, callback) => callback(null, true),
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
     credentials: true
-  }
+  },
+  transports: ['websocket', 'polling']
 });
 
 // Middleware
-app.use(
-  cors({
-    origin: (origin, callback) => callback(null, true),
-    credentials: true
-  })
-);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 

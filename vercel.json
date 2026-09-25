@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build --prefix frontend",
+  "outputDirectory": "frontend/dist",
   "headers": [
     {
       "source": "/api/(.*)",
@@ -21,7 +23,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/"
+      "destination": "/index.html"
     }
   ]
 }

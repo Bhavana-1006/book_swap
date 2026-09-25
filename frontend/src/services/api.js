@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+// Normalize base URL: strip trailing slashes to avoid double-slash routes
+const rawBaseURL = import.meta.env.VITE_API_URL || '';
+const cleanBaseURL = rawBaseURL.replace(/\/+$/, '');
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '',
+  baseURL: cleanBaseURL,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -14,6 +18,13 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // When sending FormData (e.g. avatar or book image upload), remove explicit Content-Type
+    // so the browser automatically supplies the multipart/form-data boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -24,11 +35,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Don't auto-redirect on login or register check
       const isAuthCheck = error.config.url?.includes('/api/auth/me');
-      if (!isAuthCheck) {
-        // Token expired or invalid
-        // localStorage.removeItem('bookswap_token');
+      const isAuthLogin = error.config.url?.includes('/api/auth/login');
+      const isAuthRegister = error.config.url?.includes('/api/auth/register');
+
+      if (!isAuthCheck && !isAuthLogin && !isAuthRegister) {
+        // Token expired or invalid during an authenticated user session
+        localStorage.removeItem('bookswap_token');
       }
     }
     return Promise.reject(error);

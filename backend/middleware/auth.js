@@ -4,15 +4,22 @@ const User = require('../models/User');
 const protect = async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.toLowerCase().startsWith('bearer')) {
     try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'bookswap_jwt_secure_secret_campus_platform_2026_xyz');
+      const parts = authHeader.split(' ');
+      if (parts.length >= 2) {
+        token = parts.slice(1).join(' ').trim();
+      }
 
-      const user = await User.findById(decoded.id).select('-password');
+      if (!token) {
+        return res.status(401).json({ success: false, message: 'Authentication failed: Empty token provided' });
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'bookswap_jwt_secure_secret_campus_platform_2026_xyz');
+      const userId = decoded.id || decoded._id;
+
+      const user = await User.findById(userId).select('-password');
       if (!user) {
         return res.status(401).json({ success: false, message: 'User account no longer exists' });
       }
@@ -41,16 +48,18 @@ const admin = (req, res, next) => {
 };
 
 const optionalAuth = async (req, res, next) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
+  const authHeader = req.headers.authorization;
+  if (authHeader && authHeader.toLowerCase().startsWith('bearer')) {
     try {
-      const token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'bookswap_jwt_secure_secret_campus_platform_2026_xyz');
-      const user = await User.findById(decoded.id).select('-password');
-      if (user && !user.isBanned) {
-        req.user = user;
+      const parts = authHeader.split(' ');
+      if (parts.length >= 2) {
+        const token = parts.slice(1).join(' ').trim();
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'bookswap_jwt_secure_secret_campus_platform_2026_xyz');
+        const userId = decoded.id || decoded._id;
+        const user = await User.findById(userId).select('-password');
+        if (user && !user.isBanned) {
+          req.user = user;
+        }
       }
     } catch (err) {
       // Ignore token error in optional auth
