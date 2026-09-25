@@ -118,19 +118,45 @@ const Home = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <Link
-                to={isAuthenticated ? "/dashboard" : "/register"}
-                className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
-              >
-                <span>{isAuthenticated ? "Go to Dashboard" : "Get Started Free"}</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/browse"
-                className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
-              >
-                Explore Books
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/dashboard"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <span>Go to Dashboard</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    to="/browse"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
+                  >
+                    Explore Books
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/register"
+                    className="px-6 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <span>Get Started</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="px-6 py-3.5 rounded-2xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm shadow-md transition-all"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="px-6 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Search Bar */}

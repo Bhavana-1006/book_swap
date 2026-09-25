@@ -1,15 +1,13 @@
 export const CATEGORIES_DATA = [
   {
-    id: 'School',
-    name: 'School',
-    tagline: 'Classes 6 to 10 & Board Exams',
+    id: '10th Class',
+    name: '10th Class',
+    query: 'School',
+    tagline: 'NCERT, CBSE & State Board',
     icon: 'GraduationCap',
     subcategories: [
-      'Class 6',
-      'Class 7',
-      'Class 8',
-      'Class 9',
       'Class 10',
+      'Class 9',
       'NCERT',
       'CBSE',
       'ICSE',
@@ -19,6 +17,7 @@ export const CATEGORIES_DATA = [
   {
     id: 'Intermediate',
     name: 'Intermediate',
+    query: 'Intermediate',
     tagline: '+1 & +2 Higher Secondary',
     icon: 'Layers',
     subcategories: [
@@ -31,9 +30,24 @@ export const CATEGORIES_DATA = [
     ]
   },
   {
+    id: 'Medical',
+    name: 'Medical',
+    query: 'Medical',
+    tagline: 'MBBS, BDS & Pharmacy',
+    icon: 'Stethoscope',
+    subcategories: [
+      'MBBS',
+      'BDS',
+      'Nursing',
+      'Pharmacy',
+      'NEET'
+    ]
+  },
+  {
     id: 'Engineering',
     name: 'Engineering',
-    tagline: 'B.Tech & Technical Streams',
+    query: 'Engineering',
+    tagline: 'B.Tech & Core Streams',
     icon: 'Cpu',
     subcategories: [
       'CSE',
@@ -46,30 +60,16 @@ export const CATEGORIES_DATA = [
     ]
   },
   {
-    id: 'Medical',
-    name: 'Medical',
-    tagline: 'MBBS, BDS & Allied Sciences',
-    icon: 'Stethoscope',
-    subcategories: [
-      'MBBS',
-      'BDS',
-      'Nursing',
-      'Pharmacy',
-      'NEET'
-    ]
-  },
-  {
     id: 'Competitive Exams',
     name: 'Competitive Exams',
-    tagline: 'Entrance & Government Tests',
+    query: 'Competitive Exams',
+    tagline: 'JEE, NEET, GATE & EAMCET',
     icon: 'Trophy',
     subcategories: [
       'EAMCET / EAPCET',
       'JEE',
       'NEET',
       'UPSC',
-      'SSC',
-      'Banking',
       'GATE',
       'CAT'
     ]
@@ -77,7 +77,8 @@ export const CATEGORIES_DATA = [
   {
     id: 'Degree',
     name: 'Degree',
-    tagline: 'Undergraduate & Masters',
+    query: 'Degree',
+    tagline: 'B.Com, B.Sc, BBA, MBA',
     icon: 'Award',
     subcategories: [
       'B.Com',
@@ -90,25 +91,25 @@ export const CATEGORIES_DATA = [
   },
   {
     id: 'Novels',
-    name: 'Novels & Non-Fiction',
-    tagline: 'Self-Help, Fiction & Literature',
+    name: 'Novels',
+    query: 'Novels',
+    tagline: 'Self-Help & Literature',
     icon: 'BookOpen',
     subcategories: [
       'Self-Help',
       'Fiction',
       'Non-Fiction',
-      'Finance & Wealth',
-      'Classic Literature'
+      'Finance & Wealth'
     ]
   }
 ];
 
 export const ALL_CATEGORIES = [
   'All',
-  'School',
+  '10th Class',
   'Intermediate',
-  'Engineering',
   'Medical',
+  'Engineering',
   'Competitive Exams',
   'Degree',
   'Novels'

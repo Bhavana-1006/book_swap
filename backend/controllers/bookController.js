@@ -147,7 +147,15 @@ const getBooks = async (req, res) => {
 
     // Category filter
     if (category && category !== 'All') {
-      query.category = new RegExp(`^${category.trim()}$`, 'i');
+      if (category === '10th Class' || category.toLowerCase() === 'school') {
+        query.$or = [
+          { category: new RegExp('^(School|10th Class)$', 'i') },
+          { semester: /Class 10|10th|Class 9/i },
+          { subject: /Class 10|10th/i }
+        ];
+      } else {
+        query.category = new RegExp(`^${category.trim()}$`, 'i');
+      }
     }
 
     // Specific filters
