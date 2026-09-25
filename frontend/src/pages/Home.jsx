@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Search,
@@ -28,7 +28,10 @@ import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
 import { CATEGORIES_DATA } from '../utils/categories';
 import { useAuth } from '../context/AuthContext';
-import { BookshelfScene } from '../shaders/bookshelf/BookshelfScene';
+
+const BookshelfScene = lazy(() =>
+  import('../shaders/bookshelf/BookshelfScene').then((m) => ({ default: m.BookshelfScene }))
+);
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,7 +91,9 @@ const Home = () => {
       <section className="relative pt-10 pb-20 md:pt-16 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100 via-cream-50 to-white dark:from-[#081316] dark:via-[#0b191d] dark:to-[#0f2228] border-b border-cream-200 dark:border-[#1c3842]">
         {/* BookshelfScene 3D background inside Hero section */}
         <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85 dark:opacity-60" aria-hidden="true">
-          <BookshelfScene className="w-full h-full" />
+          <Suspense fallback={<div className="w-full h-full bg-cream-100/20" />}>
+            <BookshelfScene className="w-full h-full" />
+          </Suspense>
           {/* Smooth atmospheric fade for natural text readability without any box */}
           <div className="absolute inset-0 bg-gradient-to-b from-cream-50/90 via-cream-50/40 to-white/80 dark:from-[#081316]/90 dark:via-[#0b191d]/60 dark:to-[#0f2228]/90 pointer-events-none" />
         </div>

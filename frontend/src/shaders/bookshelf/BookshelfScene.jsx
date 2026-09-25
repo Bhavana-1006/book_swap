@@ -15,37 +15,61 @@ export function BookshelfScene({ className = "" }) {
 
     let disposed = false;
     let renderer;
-    try {
-      renderer = createBookshelfRenderer(host, canvas, {
-        onReady: () => {
-          if (!disposed) setState("ready");
-        },
-        onError: (message) => {
-          if (!disposed) {
-            setErrorMessage(message);
-            setState("unavailable");
+    let resizeObserver;
+    let timerId;
+
+    // Defer initialization so initial page paint and user interaction are instant
+    const initRenderer = () => {
+      if (disposed) return;
+      try {
+        renderer = createBookshelfRenderer(host, canvas, {
+          onReady: () => {
+            if (!disposed) setState("ready");
+          },
+          onError: (message) => {
+            if (!disposed) {
+              setErrorMessage(message);
+              setState("unavailable");
+            }
+          },
+        });
+
+        if (renderer?.ready) {
+          void renderer.ready.catch((error) => {
+            if (!disposed) {
+              setErrorMessage(error instanceof Error ? error.message : "Unknown renderer error");
+              setState("unavailable");
+            }
+          });
+        }
+
+        resizeObserver = new ResizeObserver(() => {
+          if (renderer && typeof renderer.resize === 'function') {
+            renderer.resize();
           }
-        },
-      });
-      void renderer.ready.catch((error) => {
+        });
+        resizeObserver.observe(host);
+      } catch (error) {
         if (!disposed) {
           setErrorMessage(error instanceof Error ? error.message : "Unknown renderer error");
           setState("unavailable");
         }
-      });
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "Unknown renderer error");
-      setState("unavailable");
-      return undefined;
-    }
+      }
+    };
 
-    const resizeObserver = new ResizeObserver(() => renderer.resize());
-    resizeObserver.observe(host);
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      window.requestIdleCallback(initRenderer, { timeout: 1000 });
+    } else {
+      timerId = setTimeout(initRenderer, 150);
+    }
 
     return () => {
       disposed = true;
-      resizeObserver.disconnect();
-      renderer.dispose();
+      if (timerId) clearTimeout(timerId);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (renderer && typeof renderer.dispose === 'function') {
+        renderer.dispose();
+      }
     };
   }, []);
 
