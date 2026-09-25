@@ -82,6 +82,19 @@ const Navbar = () => {
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {isAuthenticated && (
+              <Link
+                to="/dashboard"
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive('/dashboard')
+                    ? 'bg-cream-200 text-navy-900 font-semibold'
+                    : 'text-gray-700 hover:text-navy-900 hover:bg-cream-100'
+                }`}
+              >
+                Dashboard
+              </Link>
+            )}
+
             <Link
               to="/browse"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
@@ -90,7 +103,7 @@ const Navbar = () => {
                   : 'text-gray-700 hover:text-navy-900 hover:bg-cream-100'
               }`}
             >
-              Browse Books
+              Explore Books
             </Link>
 
             <Link

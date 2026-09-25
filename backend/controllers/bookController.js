@@ -11,6 +11,9 @@ const createBook = async (req, res) => {
       title,
       author,
       isbn,
+      category,
+      publisher,
+      edition,
       subject,
       semester,
       branch,
@@ -68,6 +71,9 @@ const createBook = async (req, res) => {
       title: title.trim(),
       author: author.trim(),
       isbn: isbn ? isbn.trim() : '',
+      category: category || 'Engineering',
+      publisher: publisher ? publisher.trim() : '',
+      edition: edition ? edition.trim() : '',
       subject: subject.trim(),
       semester: semester.trim(),
       branch: branch ? branch.trim() : 'General',
@@ -101,8 +107,10 @@ const getBooks = async (req, res) => {
   try {
     const {
       search,
+      category,
       subject,
       semester,
+      branch,
       condition,
       listingType,
       city,
@@ -123,7 +131,7 @@ const getBooks = async (req, res) => {
       query.status = 'Available';
     }
 
-    // Search filter across title, author, subject, isbn
+    // Search filter across title, author, subject, isbn, branch, publisher
     if (search && search.trim() !== '') {
       const searchRegex = new RegExp(search.trim(), 'i');
       query.$or = [
@@ -131,8 +139,15 @@ const getBooks = async (req, res) => {
         { author: searchRegex },
         { subject: searchRegex },
         { isbn: searchRegex },
-        { branch: searchRegex }
+        { branch: searchRegex },
+        { category: searchRegex },
+        { publisher: searchRegex }
       ];
+    }
+
+    // Category filter
+    if (category && category !== 'All') {
+      query.category = new RegExp(`^${category.trim()}$`, 'i');
     }
 
     // Specific filters
@@ -142,6 +157,10 @@ const getBooks = async (req, res) => {
 
     if (semester && semester !== 'All') {
       query.semester = semester;
+    }
+
+    if (branch && branch !== 'All') {
+      query.branch = new RegExp(`^${branch.trim()}$`, 'i');
     }
 
     if (condition && condition !== 'All') {
@@ -251,6 +270,9 @@ const updateBook = async (req, res) => {
       title,
       author,
       isbn,
+      category,
+      publisher,
+      edition,
       subject,
       semester,
       branch,
@@ -266,6 +288,9 @@ const updateBook = async (req, res) => {
     if (title) book.title = title.trim();
     if (author) book.author = author.trim();
     if (isbn !== undefined) book.isbn = isbn.trim();
+    if (category) book.category = category;
+    if (publisher !== undefined) book.publisher = publisher.trim();
+    if (edition !== undefined) book.edition = edition.trim();
     if (subject) book.subject = subject.trim();
     if (semester) book.semester = semester.trim();
     if (branch !== undefined) book.branch = branch.trim();

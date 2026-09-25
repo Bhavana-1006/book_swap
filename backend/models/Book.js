@@ -22,6 +22,22 @@ const bookSchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    category: {
+      type: String,
+      enum: ['School', 'Intermediate', 'Engineering', 'Medical', 'Competitive Exams', 'Degree', 'Novels', 'General'],
+      default: 'Engineering',
+      index: true
+    },
+    publisher: {
+      type: String,
+      trim: true,
+      default: ''
+    },
+    edition: {
+      type: String,
+      trim: true,
+      default: ''
+    },
     subject: {
       type: String,
       required: [true, 'Please specify the academic subject/course'],

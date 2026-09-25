@@ -290,6 +290,12 @@ const BookDetails = () => {
 
           {/* ISBN & Academic Details Table */}
           <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-cream-100/60 border border-cream-200 text-xs">
+            {book.category && (
+              <div className="space-y-1">
+                <span className="text-gray-500 font-semibold">Category</span>
+                <p className="text-navy-900 font-bold">{book.category}</p>
+              </div>
+            )}
             {book.isbn && (
               <div className="space-y-1">
                 <span className="text-gray-500 font-semibold">ISBN</span>
@@ -305,9 +311,21 @@ const BookDetails = () => {
                 </div>
               </div>
             )}
+            {book.publisher && (
+              <div className="space-y-1">
+                <span className="text-gray-500 font-semibold">Publisher</span>
+                <p className="text-navy-900 font-bold">{book.publisher}</p>
+              </div>
+            )}
+            {book.edition && (
+              <div className="space-y-1">
+                <span className="text-gray-500 font-semibold">Edition</span>
+                <p className="text-navy-900 font-bold">{book.edition}</p>
+              </div>
+            )}
             <div className="space-y-1">
-              <span className="text-gray-500 font-semibold">Department / Branch</span>
-              <p className="text-navy-900 font-bold">{book.branch || 'General Engineering'}</p>
+              <span className="text-gray-500 font-semibold">Department / Stream</span>
+              <p className="text-navy-900 font-bold">{book.branch || 'General'}</p>
             </div>
             <div className="space-y-1">
               <span className="text-gray-500 font-semibold">Campus Location</span>

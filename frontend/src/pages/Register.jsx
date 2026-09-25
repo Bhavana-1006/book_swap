@@ -83,7 +83,7 @@ const Register = () => {
 
       await register(formData);
       success('Welcome to BookSwap! Your account was registered successfully.');
-      navigate('/');
+      navigate('/dashboard');
     } catch (err) {
       error(err.response?.data?.message || err.message || 'Registration failed');
     } finally {

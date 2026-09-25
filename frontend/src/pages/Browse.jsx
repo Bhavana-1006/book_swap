@@ -8,20 +8,26 @@ import {
   ChevronLeft,
   ChevronRight,
   Filter,
-  X
+  X,
+  Sparkles,
+  MapPin,
+  DollarSign,
+  Layers
 } from 'lucide-react';
 import api from '../services/api';
 import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
+import { CATEGORIES_DATA, ALL_CATEGORIES } from '../utils/categories';
 
 const Browse = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Search & Filter States initialized from URL params
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
+  const [category, setCategory] = useState(searchParams.get('category') || 'All');
   const [subject, setSubject] = useState(searchParams.get('subject') || 'All');
   const [semester, setSemester] = useState(searchParams.get('semester') || 'All');
-  const [listingType, setListingType] = useState(searchParams.get('type') || 'All');
+  const [listingType, setListingType] = useState(searchParams.get('type') || searchParams.get('listingType') || 'All');
   const [condition, setCondition] = useState(searchParams.get('condition') || 'All');
   const [city, setCity] = useState(searchParams.get('city') || '');
   const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
@@ -39,35 +45,19 @@ const Browse = () => {
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const subjectsList = [
-    'All',
-    'Computer Science',
-    'Mathematics',
-    'Mechanical Engineering',
-    'Electrical Engineering',
-    'Electronics & Communication',
-    'Civil Engineering',
-    'Physics',
-    'Chemistry',
-    'Business & Economics',
-    'Medicine & Biology',
-    'Humanities & Social Sciences'
-  ];
-
-  const semestersList = [
-    'All',
-    'Semester 1',
-    'Semester 2',
-    'Semester 3',
-    'Semester 4',
-    'Semester 5',
-    'Semester 6',
-    'Semester 7',
-    'Semester 8'
-  ];
-
   const conditionsList = ['All', 'New', 'Like New', 'Good', 'Acceptable'];
   const typesList = ['All', 'SELL', 'DONATE', 'SWAP'];
+
+  // Dynamic subjects based on selected category
+  const getSubcategories = () => {
+    if (category === 'All') {
+      return ['All', 'Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Anatomy', 'Physiology', 'Economics & Business', 'Fiction & Literature'];
+    }
+    const catObj = CATEGORIES_DATA.find(c => c.id.toLowerCase() === category.toLowerCase());
+    return catObj ? ['All', ...catObj.subcategories] : ['All'];
+  };
+
+  const currentSubcategories = getSubcategories();
 
   // Fetch Books from backend with active query parameters
   const fetchBooks = useCallback(async () => {
@@ -77,6 +67,7 @@ const Browse = () => {
     try {
       const params = new URLSearchParams();
       if (searchTerm.trim()) params.append('search', searchTerm.trim());
+      if (category !== 'All') params.append('category', category);
       if (subject !== 'All') params.append('subject', subject);
       if (semester !== 'All') params.append('semester', semester);
       if (listingType !== 'All') params.append('listingType', listingType);
@@ -104,7 +95,7 @@ const Browse = () => {
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, subject, semester, listingType, condition, city, minPrice, maxPrice, sort, page, setSearchParams]);
+  }, [searchTerm, category, subject, semester, listingType, condition, city, minPrice, maxPrice, sort, page, setSearchParams]);
 
   // Debounced search trigger
   useEffect(() => {
@@ -112,10 +103,11 @@ const Browse = () => {
       fetchBooks();
     }, 300);
     return () => clearTimeout(handler);
-  }, [searchTerm, subject, semester, listingType, condition, city, minPrice, maxPrice, sort, page, fetchBooks]);
+  }, [searchTerm, category, subject, semester, listingType, condition, city, minPrice, maxPrice, sort, page, fetchBooks]);
 
   const handleClearFilters = () => {
     setSearchTerm('');
+    setCategory('All');
     setSubject('All');
     setSemester('All');
     setListingType('All');
@@ -129,14 +121,14 @@ const Browse = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* Top Header & Search Bar */}
+      {/* 1. TOP HEADER & SEARCH BAR */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-cream-200">
         <div>
           <h1 className="font-serif text-3xl font-bold text-navy-900 tracking-tight">
-            Browse College Textbooks
+            Explore Campus Textbooks
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Found {totalCount} {totalCount === 1 ? 'book' : 'books'} listed by students
+            Found {totalCount} {totalCount === 1 ? 'book' : 'books'} listed across academic categories
           </p>
         </div>
 
@@ -174,11 +166,32 @@ const Browse = () => {
         </div>
       </div>
 
-      {/* Main Layout: Filters Sidebar + Books Grid */}
+      {/* 2. CATEGORY PILL STRIP */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+        {ALL_CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => {
+              setCategory(cat);
+              setSubject('All');
+              setPage(1);
+            }}
+            className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+              category.toLowerCase() === cat.toLowerCase()
+                ? 'bg-navy-900 text-white shadow-sm'
+                : 'bg-white text-gray-700 border border-cream-300 hover:bg-cream-100'
+            }`}
+          >
+            {cat === 'All' ? 'All Categories' : cat}
+          </button>
+        ))}
+      </div>
+
+      {/* 3. MAIN LAYOUT: FILTERS SIDEBAR + BOOKS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* DESKTOP FILTER SIDEBAR */}
         <aside className="hidden md:block col-span-1 space-y-6">
-          <div className="bg-white p-5 rounded-2xl border border-cream-200 shadow-soft space-y-6">
+          <div className="bg-white p-5 rounded-2xl border border-cream-200 shadow-soft space-y-6 sticky top-24">
             <div className="flex items-center justify-between pb-3 border-b border-cream-200">
               <span className="font-serif text-base font-bold text-navy-900 flex items-center gap-2">
                 <SlidersHorizontal className="w-4 h-4 text-brand-600" />
@@ -208,7 +221,7 @@ const Browse = () => {
                       setPage(1);
                     }}
                     className={`py-1.5 px-2.5 rounded-lg text-xs font-semibold transition-colors ${
-                      listingType === t
+                      listingType.toUpperCase() === t
                         ? 'bg-navy-900 text-white'
                         : 'bg-cream-100 text-gray-700 hover:bg-cream-200'
                     }`}
@@ -219,10 +232,32 @@ const Browse = () => {
               </div>
             </div>
 
-            {/* Subject Filter */}
+            {/* Category Filter */}
             <div>
               <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider mb-2">
-                Subject
+                Academic Category
+              </label>
+              <select
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                  setSubject('All');
+                  setPage(1);
+                }}
+                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-cream-50 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium"
+              >
+                {ALL_CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c === 'All' ? 'All Categories' : c}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Subcategory / Stream Filter */}
+            <div>
+              <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider mb-2">
+                Stream / Subject
               </label>
               <select
                 value={subject}
@@ -232,30 +267,9 @@ const Browse = () => {
                 }}
                 className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-cream-50 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
               >
-                {subjectsList.map((sub) => (
+                {currentSubcategories.map((sub) => (
                   <option key={sub} value={sub}>
                     {sub}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Semester Filter */}
-            <div>
-              <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider mb-2">
-                Semester
-              </label>
-              <select
-                value={semester}
-                onChange={(e) => {
-                  setSemester(e.target.value);
-                  setPage(1);
-                }}
-                className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-cream-50 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
-              >
-                {semestersList.map((sem) => (
-                  <option key={sem} value={sem}>
-                    {sem}
                   </option>
                 ))}
               </select>
@@ -294,7 +308,7 @@ const Browse = () => {
                   setCity(e.target.value);
                   setPage(1);
                 }}
-                placeholder="e.g. Boston, Berkeley"
+                placeholder="e.g. Hyderabad, Chennai"
                 className="w-full px-3 py-2 rounded-xl border border-cream-300 bg-cream-50 text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
@@ -303,7 +317,7 @@ const Browse = () => {
             {listingType !== 'DONATE' && (
               <div>
                 <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider mb-2">
-                  Price Range ($)
+                  Price Range ($ USD)
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -340,7 +354,7 @@ const Browse = () => {
           {/* Sort Control Bar */}
           <div className="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-soft flex items-center justify-between">
             <span className="text-xs text-gray-500 font-medium">
-              Showing page {page} of {totalPages}
+              Showing page {page} of {totalPages} ({totalCount} total)
             </span>
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500 font-semibold">Sort by:</span>
@@ -382,7 +396,7 @@ const Browse = () => {
                   No matching textbooks found
                 </h3>
                 <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                  Try adjusting your search terms or clearing specific filters to see more results.
+                  Try adjusting your search terms or clearing specific category/price filters to see more results.
                 </p>
                 <button
                   onClick={handleClearFilters}
@@ -467,30 +481,33 @@ const Browse = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy-900 mb-1">Subject</label>
+                <label className="block text-xs font-bold text-navy-900 mb-1">Category</label>
                 <select
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
+                  value={category}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                    setSubject('All');
+                  }}
                   className="w-full p-2 text-xs border rounded-xl"
                 >
-                  {subjectsList.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
+                  {ALL_CATEGORIES.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-navy-900 mb-1">Semester</label>
+                <label className="block text-xs font-bold text-navy-900 mb-1">Subject / Stream</label>
                 <select
-                  value={semester}
-                  onChange={(e) => setSemester(e.target.value)}
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
                   className="w-full p-2 text-xs border rounded-xl"
                 >
-                  {semestersList.map((sem) => (
-                    <option key={sem} value={sem}>
-                      {sem}
+                  {currentSubcategories.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
                     </option>
                   ))}
                 </select>

@@ -9,6 +9,7 @@ import AdminRoute from './components/AdminRoute';
 
 // Pages
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Browse from './pages/Browse';
 import BookDetails from './pages/BookDetails';
 import CreateListing from './pages/CreateListing';
@@ -48,6 +49,14 @@ function App() {
                 <Route path="/unauthorized" element={<Unauthorized />} />
 
                 {/* Protected Student Routes */}
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/create-listing"
                   element={

@@ -16,6 +16,7 @@ import {
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { CATEGORIES_DATA, ALL_CATEGORIES } from '../utils/categories';
 
 const CreateListing = () => {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ const CreateListing = () => {
   const [lookingUpIsbn, setLookingUpIsbn] = useState(false);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('Engineering');
+  const [publisher, setPublisher] = useState('');
+  const [edition, setEdition] = useState('');
   const [subject, setSubject] = useState('Computer Science');
   const [semester, setSemester] = useState('Semester 1');
   const [branch, setBranch] = useState('Computer Science & Engineering');
@@ -48,20 +52,6 @@ const CreateListing = () => {
   const [submitting, setSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  const subjectsList = [
-    'Computer Science',
-    'Mathematics',
-    'Mechanical Engineering',
-    'Electrical Engineering',
-    'Electronics & Communication',
-    'Civil Engineering',
-    'Physics',
-    'Chemistry',
-    'Business & Economics',
-    'Medicine & Biology',
-    'Humanities & Social Sciences'
-  ];
-
   const semestersList = [
     'Semester 1',
     'Semester 2',
@@ -70,7 +60,16 @@ const CreateListing = () => {
     'Semester 5',
     'Semester 6',
     'Semester 7',
-    'Semester 8'
+    'Semester 8',
+    'Class 6',
+    'Class 7',
+    'Class 8',
+    'Class 9',
+    'Class 10',
+    '1st Year',
+    '2nd Year',
+    'General Reading',
+    'Entrance Prep'
   ];
 
   // Auto-fill from Google Books API
@@ -87,6 +86,7 @@ const CreateListing = () => {
         const b = res.data.book;
         if (b.title) setTitle(b.title);
         if (b.authors) setAuthor(b.authors);
+        if (b.publisher) setPublisher(b.publisher);
         if (b.description) setDescription(b.description);
         if (b.coverImage) {
           setExternalCoverUrl(b.coverImage);
@@ -143,7 +143,6 @@ const CreateListing = () => {
 
   const removeImage = (index) => {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
-    // If external cover was removed
     if (externalCoverUrl && index === 0) {
       setExternalCoverUrl('');
     } else {
@@ -156,6 +155,7 @@ const CreateListing = () => {
     const errors = {};
     if (!title.trim()) errors.title = 'Title is required';
     if (!author.trim()) errors.author = 'Author name is required';
+    if (!subject.trim()) errors.subject = 'Subject/course is required';
     if (!description.trim()) errors.description = 'Please describe the book edition or notes';
     if (listingType === 'SELL') {
       const p = parseFloat(price);
@@ -178,7 +178,10 @@ const CreateListing = () => {
       formData.append('title', title.trim());
       formData.append('author', author.trim());
       if (isbn) formData.append('isbn', isbn.trim());
-      formData.append('subject', subject);
+      formData.append('category', category);
+      if (publisher) formData.append('publisher', publisher.trim());
+      if (edition) formData.append('edition', edition.trim());
+      formData.append('subject', subject.trim());
       formData.append('semester', semester);
       formData.append('branch', branch.trim());
       formData.append('description', description.trim());
@@ -398,28 +401,70 @@ const CreateListing = () => {
             {formErrors.author && <p className="text-xs text-rose-600">{formErrors.author}</p>}
           </div>
 
-          {/* Subject */}
+          {/* Category */}
           <div className="space-y-1">
             <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
-              Subject Area <span className="text-rose-500">*</span>
+              Academic Category <span className="text-rose-500">*</span>
             </label>
             <select
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium"
             >
-              {subjectsList.map((s) => (
-                <option key={s} value={s}>
-                  {s}
+              {ALL_CATEGORIES.filter(c => c !== 'All').map((c) => (
+                <option key={c} value={c}>
+                  {c}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Semester */}
+          {/* Subject / Course */}
           <div className="space-y-1">
             <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
-              Relevant Semester <span className="text-rose-500">*</span>
+              Subject Area / Course <span className="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="e.g. Data Structures, Physics, Mathematics 1A"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+            />
+          </div>
+
+          {/* Publisher */}
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
+              Publisher (optional)
+            </label>
+            <input
+              type="text"
+              value={publisher}
+              onChange={(e) => setPublisher(e.target.value)}
+              placeholder="e.g. Pearson, McGraw-Hill, NCERT"
+              className="w-full px-4 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+            />
+          </div>
+
+          {/* Edition */}
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
+              Edition (optional)
+            </label>
+            <input
+              type="text"
+              value={edition}
+              onChange={(e) => setEdition(e.target.value)}
+              placeholder="e.g. 10th Edition, 2024 Revised"
+              className="w-full px-4 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
+            />
+          </div>
+
+          {/* Semester / Class */}
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
+              Relevant Semester / Class <span className="text-rose-500">*</span>
             </label>
             <select
               value={semester}
@@ -434,22 +479,22 @@ const CreateListing = () => {
             </select>
           </div>
 
-          {/* Branch */}
+          {/* Branch / Stream */}
           <div className="space-y-1">
             <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
-              Branch / Department
+              Branch / Stream
             </label>
             <input
               type="text"
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
-              placeholder="e.g. Computer Science, Mechanical"
+              placeholder="e.g. CSE, MPC, MBBS, CBSE"
               className="w-full px-4 py-2.5 rounded-xl border border-cream-300 bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
             />
           </div>
 
           {/* Condition */}
-          <div className="space-y-1">
+          <div className="sm:col-span-2 space-y-1">
             <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
               Condition <span className="text-rose-500">*</span>
             </label>
@@ -474,7 +519,7 @@ const CreateListing = () => {
               rows="4"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Detail the edition number, inclusion of access codes or CD, chapter highlights, or reason for selling..."
+              placeholder="Detail the edition number, inclusion of access codes, chapter highlights, or reason for selling..."
               className={`w-full px-4 py-2.5 rounded-xl border ${
                 formErrors.description ? 'border-rose-500' : 'border-cream-300'
               } bg-white text-sm text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none`}
@@ -547,7 +592,7 @@ const CreateListing = () => {
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                placeholder="e.g. Boston"
+                placeholder="e.g. Hyderabad"
                 className="w-full px-3.5 py-2 rounded-xl border border-cream-300 bg-white text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-brand-500"
               />
             </div>
