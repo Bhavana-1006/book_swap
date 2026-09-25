@@ -99,10 +99,10 @@ const Home = () => {
     <div className="space-y-20 pb-16">
       {/* 1. HERO SECTION WITH SUBTLE 3D EDUCATIONAL BOOKSHELF ANIMATION */}
       <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100/80 via-cream-50 to-white border-b border-cream-200">
-        {/* Subtle BookshelfScene 3D background inside Hero section only */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-40 md:opacity-45" aria-hidden="true">
+        {/* BookshelfScene 3D background inside Hero section only - crisp visibility behind text */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-85 md:opacity-90" aria-hidden="true">
           <BookshelfScene className="w-full h-full" />
-          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/60 via-cream-50/50 to-white/80 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/30 via-transparent to-white/70 pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -123,7 +123,7 @@ const Home = () => {
               Buy, sell, donate, or swap college textbooks directly with fellow students. Save up to 80% on semester coursework and keep academic resources in circulation.
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons - Distinct from Navbar (no duplicate Login/Register buttons) */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               {isAuthenticated ? (
                 <>
@@ -144,23 +144,18 @@ const Home = () => {
               ) : (
                 <>
                   <Link
-                    to="/register"
-                    className="px-6 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                    to="/browse"
+                    className="px-7 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2"
                   >
-                    <span>Get Started</span>
+                    <span>Explore Books</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                   <Link
-                    to="/login"
-                    className="px-6 py-3.5 rounded-2xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm shadow-md transition-all"
+                    to="/nearby"
+                    className="px-7 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all flex items-center gap-2"
                   >
-                    Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="px-6 py-3.5 rounded-2xl bg-white hover:bg-cream-100 text-navy-900 border border-cream-300 font-bold text-sm shadow-soft transition-all"
-                  >
-                    Register
+                    <MapPin className="w-4 h-4 text-emerald-600" />
+                    <span>Books Near Me</span>
                   </Link>
                 </>
               )}

@@ -254,15 +254,15 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-3.5 py-2 text-sm font-semibold text-navy-800 hover:text-brand-600 transition-colors"
+                  className="px-4 py-2 text-sm font-semibold text-navy-800 hover:text-brand-600 transition-colors"
                 >
-                  Log In
+                  Login
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-semibold text-navy-900 bg-cream-200 hover:bg-cream-300 rounded-xl transition-all"
+                  className="px-5 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-sm hover:shadow transition-all"
                 >
-                  Join Campus
+                  Get Started
                 </Link>
               </div>
             )}
@@ -382,13 +382,13 @@ const Navbar = () => {
                 to="/login"
                 className="w-full py-2.5 text-center text-sm font-semibold rounded-xl border border-cream-300 text-navy-900 hover:bg-cream-100"
               >
-                Log In
+                Login
               </Link>
               <Link
                 to="/register"
-                className="w-full py-2.5 text-center text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700"
+                className="w-full py-2.5 text-center text-sm font-bold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm"
               >
-                Register Account
+                Get Started
               </Link>
             </div>
           )}

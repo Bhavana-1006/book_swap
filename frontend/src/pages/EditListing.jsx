@@ -197,15 +197,15 @@ const EditListing = () => {
 
             {listingType === 'SELL' && (
               <div>
-                <label className="block text-xs font-bold text-navy-900 uppercase mb-1">Price ($)</label>
+                <label className="block text-xs font-bold text-navy-900 uppercase mb-1">Price (₹ INR)</label>
                 <input
                   type="number"
                   min="1"
-                  step="0.5"
+                  step="1"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   required
-                  className="w-full px-3.5 py-2 rounded-xl border border-cream-300 text-sm"
+                  className="w-full px-3.5 py-2 rounded-xl border border-cream-300 text-sm font-bold"
                 />
               </div>
             )}

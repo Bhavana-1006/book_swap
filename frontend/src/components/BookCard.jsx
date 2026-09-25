@@ -4,6 +4,7 @@ import { Heart, MapPin, Sparkles, BookOpen, Layers, User, ArrowRight } from 'luc
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import api from '../services/api';
+import { formatPrice } from '../utils/formatPrice';
 
 const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
   const { isAuthenticated } = useAuth();
@@ -68,13 +69,13 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
           {book.listingType === 'SELL' && (
             <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-navy-900 text-white shadow-sm flex items-center gap-1">
               <span>Sell</span>
-              <span className="text-emerald-400 font-extrabold">${book.price}</span>
+              <span className="text-amber-400 font-extrabold">{formatPrice(book.price, 'SELL')}</span>
             </span>
           )}
           {book.listingType === 'DONATE' && (
             <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-700 text-white shadow-sm flex items-center gap-1">
               <Sparkles className="w-3 h-3 text-amber-300" />
-              <span>Free Donate</span>
+              <span>Free Donation</span>
             </span>
           )}
           {book.listingType === 'SWAP' && (

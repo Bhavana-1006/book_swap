@@ -388,7 +388,7 @@ const AdminDashboard = () => {
                         {l.owner?.name} ({l.owner?.college})
                       </td>
                       <td className="py-3 px-4 font-bold text-navy-900">
-                        {l.listingType} {l.listingType === 'SELL' && `$${l.price}`}
+                        {l.listingType} {l.listingType === 'SELL' && `₹${Number(l.price).toLocaleString('en-IN')}`}
                       </td>
                       <td className="py-3 px-4">
                         <span

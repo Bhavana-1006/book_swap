@@ -226,7 +226,7 @@ const MyRequests = () => {
                       </h4>
                       <p className="text-xs text-gray-500 truncate">by {req.book?.author}</p>
                       {req.book?.price > 0 && req.requestType === 'PURCHASE' && (
-                        <p className="text-xs font-bold text-navy-900 mt-0.5">${req.book.price}</p>
+                        <p className="text-xs font-bold text-navy-900 mt-0.5">₹{Number(req.book.price).toLocaleString('en-IN')}</p>
                       )}
                     </div>
                   </div>

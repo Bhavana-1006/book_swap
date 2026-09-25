@@ -20,8 +20,8 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "id": "maths-10",
     "title": "10th Mathematics",
     "roman": "I",
-    "discipline": "Secondary Education",
-    "note": "Algebra, coordinate geometry, and trigonometry.",
+    "discipline": "10th Class · Mathematics",
+    "note": "Algebra, coordinate geometry, trigonometry & statistics.",
     "deck": "Comprehensive secondary mathematics curriculum covering polynomials, quadratic equations, coordinate geometry, and trigonometry.",
     "binding": "Deep teal cloth · warm gold foil",
     "format": "150 × 220 mm · academic edition",
@@ -54,48 +54,11 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "seed": 11
   },
   {
-    "id": "science-10",
-    "title": "10th Science",
+    "id": "physics-mpc",
+    "title": "MPC Physics",
     "roman": "II",
-    "discipline": "General Science",
-    "note": "Physics, chemistry, and biology fundamentals.",
-    "deck": "Core foundation science textbook covering chemical reactions, life processes, electricity, and magnetic effects.",
-    "binding": "Muted sage cloth · warm gold foil",
-    "format": "156 × 228 mm · academic edition",
-    "theme": "10th Class · Science",
-    "motif": "Cellular modules",
-    "motifKey": "modules",
-    "paletteLabel": "Muted sage · soft cream · gold",
-    "color": "#5A7261",
-    "foil": "#D6A756",
-    "palette": {
-      "paper": "#395648",
-      "paperDeep": "#24372E",
-      "paperPale": "#F8F3E7",
-      "ink": "#12343B",
-      "inkSoft": "#6D7C66",
-      "wall": "#395648",
-      "shelf": "#3b2418",
-      "shelfDark": "#1c0f09",
-      "light": "#F8F3E7",
-      "fill": "#A8B5A2"
-    },
-    "width": 1.1,
-    "height": 1.52,
-    "depth": 0.28,
-    "chapters": [
-      "Life Processes",
-      "Electricity",
-      "Reactions"
-    ],
-    "seed": 22
-  },
-  {
-    "id": "physics-inter",
-    "title": "Inter Physics",
-    "roman": "III",
     "discipline": "Intermediate · MPC",
-    "note": "Mechanics, thermodynamics, wave optics, and electrodynamics.",
+    "note": "Mechanics, thermodynamics, wave optics & electrodynamics.",
     "deck": "Higher secondary physics textbook balancing theoretical principles with numerical problem-solving for competitive engineering prep.",
     "binding": "Dark teal cloth · warm gold foil",
     "format": "152 × 224 mm · academic edition",
@@ -125,30 +88,67 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       "Electromagnetism",
       "Optics"
     ],
+    "seed": 22
+  },
+  {
+    "id": "science-10",
+    "title": "10th Science",
+    "roman": "III",
+    "discipline": "10th Class · General Science",
+    "note": "Physics, chemistry, and biology fundamentals.",
+    "deck": "Core foundation science textbook covering chemical reactions, life processes, electricity, and magnetic effects.",
+    "binding": "Muted sage cloth · warm gold foil",
+    "format": "156 × 228 mm · academic edition",
+    "theme": "10th Class · Science",
+    "motif": "Cellular modules",
+    "motifKey": "modules",
+    "paletteLabel": "Muted sage · soft cream · gold",
+    "color": "#466352",
+    "foil": "#D6A756",
+    "palette": {
+      "paper": "#30483C",
+      "paperDeep": "#1F3127",
+      "paperPale": "#F8F3E7",
+      "ink": "#12343B",
+      "inkSoft": "#6D7C66",
+      "wall": "#30483C",
+      "shelf": "#3b2418",
+      "shelfDark": "#1c0f09",
+      "light": "#F8F3E7",
+      "fill": "#A8B5A2"
+    },
+    "width": 1.1,
+    "height": 1.52,
+    "depth": 0.28,
+    "chapters": [
+      "Life Processes",
+      "Electricity",
+      "Reactions"
+    ],
     "seed": 33
   },
   {
-    "id": "chem-inter",
-    "title": "Inter Chemistry",
+    "id": "chemistry-mpc",
+    "title": "MPC Chemistry",
     "roman": "IV",
-    "discipline": "Intermediate · BiPC & MPC",
-    "note": "Organic reaction mechanisms, stoichiometry, and kinetics.",
+    "discipline": "Intermediate · Chemistry",
+    "note": "Organic reaction mechanisms, stoichiometry & kinetics.",
     "deck": "In-depth intermediate chemistry manual covering physical, inorganic, and organic chemistry structures and stoichiometry.",
-    "binding": "Warm terracotta cloth · soft cream foil",
-    "format": "162 × 242 mm · clinical edition",
+    "binding": "Deep navy cloth · radiant gold foil",
+    "format": "162 × 242 mm · academic edition",
     "theme": "Intermediate · Chemical Sciences",
     "motif": "Orbital resonance",
     "motifKey": "orbits",
-    "paletteLabel": "Terracotta · cream · soft sage",
-    "color": "#824C3A",
-    "foil": "#F8F3E7",
+    "paletteLabel": "Deep navy · cream · warm gold",
+    "color": "#162E3B",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#643324",
-      "paperDeep": "#421D12",
+      "paper": "#0E202B",
+      "paperDeep": "#09151D",
       "paperPale": "#F8F3E7",
       "ink": "#12343B",
       "inkSoft": "#A8B5A2",
-      "wall": "#643324",
+      "wall": "#0E202B",
       "shelf": "#3b2117",
       "shelfDark": "#1a0d08",
       "light": "#F8F3E7",
@@ -168,8 +168,8 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "id": "anatomy-medical",
     "title": "Human Anatomy",
     "roman": "V",
-    "discipline": "Medical Science",
-    "note": "Systemic anatomy, neuroanatomy, and clinical physiology.",
+    "discipline": "Medical Science · MBBS",
+    "note": "Systemic anatomy, neuroanatomy & clinical physiology.",
     "deck": "Standard medical reference volume detailing muscular, skeletal, neural, and cardiovascular structures with clinical correlations.",
     "binding": "Slate teal cloth · warm gold foil",
     "format": "150 × 226 mm · clinical edition",
@@ -206,7 +206,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "title": "Data Structures",
     "roman": "VI",
     "discipline": "Engineering · CSE",
-    "note": "Algorithms, time complexity, trees, graphs, and DP.",
+    "note": "Algorithms, time complexity, trees, graphs & DP.",
     "deck": "Core textbook for engineering undergraduates on algorithmic problem solving, abstract data types, and computational efficiency.",
     "binding": "Forest sage cloth · radiant gold foil",
     "format": "154 × 230 mm · engineering edition",
@@ -214,15 +214,15 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "motif": "Hierarchical trees",
     "motifKey": "brackets",
     "paletteLabel": "Forest sage · cream · gold",
-    "color": "#395648",
+    "color": "#2C4A3E",
     "foil": "#D6A756",
     "palette": {
-      "paper": "#24372E",
-      "paperDeep": "#15231C",
+      "paper": "#1E352B",
+      "paperDeep": "#12231C",
       "paperPale": "#F8F3E7",
       "ink": "#12343B",
       "inkSoft": "#A8B5A2",
-      "wall": "#24372E",
+      "wall": "#1E352B",
       "shelf": "#3a2018",
       "shelfDark": "#1a0e0a",
       "light": "#F8F3E7",
@@ -239,27 +239,27 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "seed": 66
   },
   {
-    "id": "engg-maths",
-    "title": "Engg Mathematics",
+    "id": "ai-engineering",
+    "title": "Artificial Intel",
     "roman": "VII",
-    "discipline": "Engineering · Applied Maths",
-    "note": "Calculus, linear algebra, differential equations, and transforms.",
-    "deck": "Advanced engineering mathematics textbook covering multivariable calculus, Fourier series, matrices, and differential equations.",
-    "binding": "Warm amber gold cloth · soft cream foil",
+    "discipline": "Engineering · AIML",
+    "note": "Machine learning, neural networks, classification & evaluation.",
+    "deck": "Advanced artificial intelligence textbook covering machine learning models, neural network architectures, and statistical evaluations.",
+    "binding": "Dark teal cloth · radiant gold foil",
     "format": "148 × 220 mm · engineering edition",
-    "theme": "Engineering · Applied Mathematics",
+    "theme": "Engineering · Artificial Intelligence",
     "motif": "Structured vectors",
     "motifKey": "caret",
-    "paletteLabel": "Warm gold · cream · dark teal",
-    "color": "#946E2B",
-    "foil": "#F8F3E7",
+    "paletteLabel": "Dark teal · cream · radiant gold",
+    "color": "#0F4C5C",
+    "foil": "#D6A756",
     "palette": {
-      "paper": "#6C4E1A",
-      "paperDeep": "#47320D",
+      "paper": "#0B3642",
+      "paperDeep": "#07232B",
       "paperPale": "#F8F3E7",
       "ink": "#12343B",
       "inkSoft": "#5A7261",
-      "wall": "#6C4E1A",
+      "wall": "#0B3642",
       "shelf": "#402015",
       "shelfDark": "#1d0d08",
       "light": "#F8F3E7",
@@ -269,9 +269,9 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     "height": 1.5,
     "depth": 0.24,
     "chapters": [
-      "Linear Algebra",
-      "Vector Calculus",
-      "Transforms"
+      "Machine Learning",
+      "Neural Networks",
+      "Deep Learning"
     ],
     "seed": 77
   }
@@ -774,11 +774,16 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       ctx.letterSpacing = "4px";
       ctx.fillText(`EDUCATIONAL COLLECTION  /  ${book.roman}`, canvasTexture.width / 2, 92);
 
-      const titleSize = book.title.length > 10 ? 72 : 88;
-      ctx.font = `400 ${titleSize}px "Iowan Old Style", Baskerville, Georgia, serif`;
-      ctx.fillText(book.title, canvasTexture.width / 2, canvasTexture.height * 0.72);
-      ctx.font = '500 16px Inter, "Helvetica Neue", Arial, sans-serif';
-      ctx.fillText(book.discipline.toUpperCase(), canvasTexture.width / 2, canvasTexture.height * 0.79);
+      const titleSize = book.title.length > 14 ? 68 : (book.title.length > 10 ? 78 : 88);
+      ctx.font = `700 ${titleSize}px "Inter", "Georgia", sans-serif`;
+      ctx.shadowColor = "rgba(0,0,0,0.45)";
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetY = 3;
+      ctx.fillText(book.title, canvasTexture.width / 2, canvasTexture.height * 0.70);
+      ctx.shadowColor = "transparent";
+      ctx.shadowBlur = 0;
+      ctx.font = '700 22px Inter, "Helvetica Neue", Arial, sans-serif';
+      ctx.fillText(book.discipline.toUpperCase(), canvasTexture.width / 2, canvasTexture.height * 0.78);
 
       return configureCanvasTexture(new THREE.CanvasTexture(canvasTexture));
     }
@@ -1449,8 +1454,8 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
       ctx.save();
       ctx.translate(foilCanvas.width * 0.5, foilCanvas.height * 0.5);
       ctx.rotate(Math.PI / 2);
-      ctx.font = `400 ${book.title.length > 10 ? 58 : 68}px "Iowan Old Style", Baskerville, Georgia, serif`;
-      ctx.letterSpacing = "0px";
+      ctx.font = `700 ${book.title.length > 12 ? 58 : 68}px "Inter", "Georgia", sans-serif`;
+      ctx.letterSpacing = "1px";
       ctx.fillText(book.title, 0, 0);
       ctx.restore();
 
@@ -3745,7 +3750,7 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
     function updateShelfLayout(delta, elapsed) {
       if (mode === "hero") {
         if (wheelIdle <= 0) {
-          targetPosition += delta * 0.18;
+          targetPosition += delta * 0.24;
         }
         position = reducedMotion
           ? targetPosition
@@ -3829,18 +3834,28 @@ export function createBookshelfRenderer(host, canvas, callbacks = {}) {
           updateFlexiblePage(pagePivot, 0, delta);
         });
 
-        const idle = reducedMotion ? 0 : Math.sin(elapsed * 0.72 + index * 0.8) * 0.012 * focus;
-        rig.motion.position.y = damp(rig.motion.position.y, idle + (hoverPreview ? 0.035 : 0), 9, delta);
+        const idleY = reducedMotion ? 0 : (Math.sin(elapsed * 1.1 + index * 1.25) * 0.05 + Math.cos(elapsed * 0.75 + index * 0.85) * 0.025);
+        const idleRotX = reducedMotion ? 0 : Math.sin(elapsed * 0.85 + index * 1.1) * 0.035;
+        const idleRotY = reducedMotion ? 0 : Math.cos(elapsed * 0.95 + index * 0.75) * 0.045;
+        const idleRotZ = reducedMotion ? 0 : Math.sin(elapsed * 0.7 + index * 1.3) * 0.025;
+
+        rig.motion.position.y = damp(rig.motion.position.y, idleY + (hoverPreview ? 0.045 : 0), 8, delta);
         rig.motion.rotation.x = damp(
           rig.motion.rotation.x,
-          hoverPreview ? pointer.ndc.y * 0.035 : 0,
-          10,
+          idleRotX + (hoverPreview ? pointer.ndc.y * 0.04 : 0),
+          8,
           delta
         );
         rig.motion.rotation.y = damp(
           rig.motion.rotation.y,
-          hoverPreview ? -pointer.ndc.x * 0.035 : 0,
-          10,
+          idleRotY + (hoverPreview ? -pointer.ndc.x * 0.04 : 0),
+          8,
+          delta
+        );
+        rig.motion.rotation.z = damp(
+          rig.motion.rotation.z,
+          idleRotZ,
+          8,
           delta
         );
       });

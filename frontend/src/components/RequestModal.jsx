@@ -109,7 +109,7 @@ const RequestModal = ({ book, isOpen, onClose, onSuccess }) => {
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[11px] font-semibold text-brand-700">{book.listingType}</span>
                 {book.listingType === 'SELL' && (
-                  <span className="text-xs font-bold text-navy-900">${book.price}</span>
+                  <span className="text-xs font-bold text-navy-900">₹{Number(book.price).toLocaleString('en-IN')}</span>
                 )}
                 <span className="text-[11px] text-gray-400">• Owner: {book.owner?.name}</span>
               </div>

@@ -155,7 +155,7 @@ const MyListings = () => {
                   <p className="text-xs text-gray-500 truncate">by {b.author}</p>
 
                   <div className="mt-2 text-xs font-bold text-navy-900">
-                    {b.listingType === 'SELL' ? `$${b.price}` : b.listingType === 'DONATE' ? 'Free Donation' : 'Swap'}
+                    {b.listingType === 'SELL' ? `₹${Number(b.price).toLocaleString('en-IN')}` : b.listingType === 'DONATE' ? 'Free Donation' : 'Swap'}
                   </div>
                 </div>
               </div>
