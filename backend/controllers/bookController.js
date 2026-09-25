@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Book = require('../models/Book');
 const { fetchBookByISBN } = require('../services/googleBooksService');
 
@@ -202,6 +203,10 @@ const getBooks = async (req, res) => {
 // @access  Public
 const getBookById = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: 'Invalid book listing ID' });
+    }
+
     const book = await Book.findById(req.params.id).populate(
       'owner',
       'name email college city profileImage createdAt'
@@ -226,6 +231,10 @@ const getBookById = async (req, res) => {
 // @access  Private (Owner only)
 const updateBook = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: 'Invalid book listing ID' });
+    }
+
     let book = await Book.findById(req.params.id);
 
     if (!book) {
@@ -233,7 +242,8 @@ const updateBook = async (req, res) => {
     }
 
     // Ownership check (or ADMIN)
-    if (book.owner.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+    const userId = req.user?._id?.toString() || req.user?.id?.toString();
+    if (book.owner.toString() !== userId && req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Not authorized to edit this listing' });
     }
 
@@ -264,7 +274,10 @@ const updateBook = async (req, res) => {
     if (listingType) book.listingType = listingType;
     if (price !== undefined) book.price = Number(price);
     if (swapPreferences !== undefined) book.swapPreferences = swapPreferences.trim();
-    if (city) book.location.city = city.trim();
+    if (city) {
+      if (!book.location) book.location = { type: 'Point', city: city.trim() };
+      else book.location.city = city.trim();
+    }
     if (status) book.status = status;
 
     // Handle new images if uploaded
@@ -292,6 +305,10 @@ const updateBook = async (req, res) => {
 // @access  Private (Owner or Admin)
 const deleteBook = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ success: false, message: 'Invalid book listing ID' });
+    }
+
     const book = await Book.findById(req.params.id);
 
     if (!book) {
@@ -299,7 +316,8 @@ const deleteBook = async (req, res) => {
     }
 
     // Ownership or Admin check
-    if (book.owner.toString() !== req.user.id && req.user.role !== 'ADMIN') {
+    const userId = req.user?._id?.toString() || req.user?.id?.toString();
+    if (book.owner.toString() !== userId && req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Not authorized to delete this listing' });
     }
 
@@ -323,7 +341,8 @@ const deleteBook = async (req, res) => {
 const getMyListings = async (req, res) => {
   try {
     const { status } = req.query;
-    const query = { owner: req.user.id };
+    const userId = req.user?._id || req.user?.id;
+    const query = { owner: userId };
 
     if (status && status !== 'All') {
       query.status = status;

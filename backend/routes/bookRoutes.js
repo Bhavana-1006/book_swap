@@ -16,7 +16,9 @@ const upload = require('../middleware/upload');
 // Specific paths must precede /:id
 router.get('/', getBooks);
 router.post('/', protect, upload.array('images', 5), createBook);
+router.get('/my', protect, getMyListings);
 router.get('/my/listings', protect, getMyListings);
+router.get('/user/me', protect, getMyListings);
 router.get('/nearby', getNearbyBooks);
 router.get('/isbn/:isbn', lookupISBN);
 router.get('/:id', getBookById);

@@ -195,13 +195,11 @@ const CreateListing = () => {
         formData.append('images', file);
       });
 
-      const res = await api.post('/api/books', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await api.post('/api/books', formData);
 
       if (res.data.success) {
         success('Book listed successfully on the campus marketplace!');
-        navigate(`/book/${res.data.book._id}`);
+        navigate('/browse');
       }
     } catch (err) {
       error(err.response?.data?.message || 'Failed to list book');

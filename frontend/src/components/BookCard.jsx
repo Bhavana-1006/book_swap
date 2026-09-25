@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, MapPin, Sparkles, BookOpen, Layers } from 'lucide-react';
+import { Heart, MapPin, Sparkles, BookOpen, Layers, User, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import api from '../services/api';
@@ -139,26 +139,45 @@ const BookCard = ({ book, onWishlistChange, isWishlisted = false }) => {
             by {book.author}
           </p>
 
+          {/* Seller / Owner info */}
+          <div className="flex items-center gap-1.5 mt-2 text-xs text-gray-600">
+            <User className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+            <span className="truncate font-medium">
+              Seller: {book.owner?.name || 'Campus Student'}
+            </span>
+          </div>
+
           {/* Swap Preference Snippet if SWAP */}
           {book.listingType === 'SWAP' && book.swapPreferences && (
-            <div className="mt-2.5 p-2 rounded-lg bg-accent-50/70 border border-accent-100 text-[11px] text-accent-800 line-clamp-1">
+            <div className="mt-2 p-2 rounded-lg bg-accent-50/70 border border-accent-100 text-[11px] text-accent-800 line-clamp-1">
               <span className="font-semibold">Seeking:</span> {book.swapPreferences}
             </div>
           )}
         </div>
 
-        {/* Location & Owner Footer */}
-        <div className="pt-3 mt-3 border-t border-cream-200/80 flex items-center justify-between text-xs text-gray-500">
-          <div className="flex items-center gap-1 truncate max-w-[140px]" title={book.location?.city || book.owner?.city}>
-            <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-            <span className="truncate">{book.location?.city || book.owner?.city || 'Campus'}</span>
+        <div>
+          {/* Location & College */}
+          <div className="pt-2.5 mt-2.5 border-t border-cream-200/80 flex items-center justify-between text-[11px] text-gray-500">
+            <div className="flex items-center gap-1 truncate max-w-[140px]" title={book.location?.city || book.owner?.city}>
+              <MapPin className="w-3 h-3 text-gray-400 flex-shrink-0" />
+              <span className="truncate">{book.location?.city || book.owner?.city || 'Campus'}</span>
+            </div>
+
+            {book.owner?.college && (
+              <span className="truncate max-w-[130px] text-gray-400 font-medium" title={book.owner.college}>
+                {book.owner.college}
+              </span>
+            )}
           </div>
 
-          {book.owner?.college && (
-            <span className="text-[11px] text-gray-400 truncate max-w-[120px]" title={book.owner?.college}>
-              {book.owner.college}
-            </span>
-          )}
+          {/* View Details Action Button */}
+          <Link
+            to={`/book/${book._id}`}
+            className="mt-3 w-full py-2 px-3 rounded-xl bg-cream-100/80 hover:bg-navy-900 text-navy-800 hover:text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200 group/btn"
+          >
+            <span>View Details</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </div>
