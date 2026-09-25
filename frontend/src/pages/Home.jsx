@@ -28,6 +28,7 @@ import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
 import { CATEGORIES_DATA } from '../utils/categories';
 import { useAuth } from '../context/AuthContext';
+import { BookshelfScene } from '../shaders/bookshelf/BookshelfScene';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -96,8 +97,14 @@ const Home = () => {
 
   return (
     <div className="space-y-20 pb-16">
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION WITH SUBTLE EDUCATIONAL BOOKSHELF ANIMATION BACKGROUND */}
       <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-cream-100/80 via-cream-50 to-white border-b border-cream-200">
+        {/* Subtle BookshelfScene 3D background */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-30 md:opacity-35" aria-hidden="true">
+          <BookshelfScene className="w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cream-100/70 via-cream-50/60 to-white/90" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Pill Tag */}
