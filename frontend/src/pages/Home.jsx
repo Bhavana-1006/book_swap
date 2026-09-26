@@ -108,8 +108,8 @@ const Home = () => {
             </div>
 
             {/* Main Heading & Tagline with Staggered Entrance Animation */}
-            <h1 className="hero-animate-title font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 dark:text-[#F7F2E8] tracking-tight leading-[1.15]">
-              Your Next Chapter <span className="text-brand-600 dark:text-[#D8B66C]">Starts Here</span>.
+            <h1 className="hero-heading-animated font-serif text-4xl sm:text-5xl md:text-6xl font-black text-navy-900 dark:text-[#F7F2E8] tracking-tight leading-[1.15]">
+              Your Next Chapter <span className="hero-highlight-animated text-brand-600 dark:text-[#D8B66C]">Starts Here</span>.
             </h1>
 
             {/* Supporting Text */}
@@ -161,40 +161,43 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. CATEGORY SHORTCUTS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. CATEGORY SHORTCUTS - SINGLE LINE CONTINUOUS SCROLL */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="font-serif text-2xl font-bold text-navy-900">Explore by Category</h2>
-            <p className="text-xs text-gray-500 mt-0.5">Find books tailored to your academic curriculum</p>
+            <h2 className="font-serif text-2xl font-bold text-navy-900 dark:text-[#F7F2E8]">Explore by Category</h2>
+            <p className="text-xs text-gray-500 dark:text-[#BBCBD0] mt-0.5">Find books tailored to your academic curriculum</p>
           </div>
           <Link
             to="/browse"
-            className="text-xs font-bold text-brand-600 hover:text-brand-700 flex items-center gap-1"
+            className="text-xs font-bold text-brand-600 dark:text-[#D8B66C] hover:text-brand-700 dark:hover:text-[#c4a259] flex items-center gap-1"
           >
             <span>All Categories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-          {CATEGORIES_DATA.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => navigate(`/browse?category=${encodeURIComponent(cat.id)}`)}
-              className="group p-4 bg-white rounded-2xl border border-cream-200 shadow-soft hover:shadow-hover hover:border-brand-500 transition-all text-left flex flex-col justify-between"
-            >
-              <div className="w-10 h-10 rounded-xl bg-cream-100 text-brand-600 group-hover:bg-brand-600 group-hover:text-white flex items-center justify-center transition-colors mb-3">
-                {getCategoryIcon(cat.icon)}
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-navy-900 group-hover:text-brand-600 transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-[10px] text-gray-400 truncate mt-0.5">{cat.tagline}</p>
-              </div>
-            </button>
-          ))}
+        {/* Marquee Carousel Container */}
+        <div className="relative w-full overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
+          <div className="animate-marquee-continuous flex gap-4">
+            {[...CATEGORIES_DATA, ...CATEGORIES_DATA].map((cat, idx) => (
+              <button
+                key={`${cat.id}-${idx}`}
+                onClick={() => navigate(`/browse?category=${encodeURIComponent(cat.id)}`)}
+                className="group w-52 flex-shrink-0 p-4 bg-white dark:bg-[#203640] rounded-2xl border border-cream-200 dark:border-[#36505A] shadow-soft hover:shadow-hover hover:border-brand-500 dark:hover:border-[#D8B66C] hover:-translate-y-1 transition-all text-left flex flex-col justify-between"
+              >
+                <div className="w-10 h-10 rounded-xl bg-cream-100 dark:bg-[#172A33] text-brand-600 dark:text-[#D8B66C] group-hover:bg-brand-600 group-hover:text-white dark:group-hover:bg-[#D8B66C] dark:group-hover:text-[#101D24] flex items-center justify-center transition-colors mb-3">
+                  {getCategoryIcon(cat.icon)}
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-navy-900 dark:text-[#F7F2E8] group-hover:text-brand-600 dark:group-hover:text-[#D8B66C] transition-colors truncate">
+                    {cat.name}
+                  </h3>
+                  <p className="text-[10px] text-gray-400 dark:text-[#8C9FA6] truncate mt-0.5">{cat.tagline}</p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 

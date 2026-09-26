@@ -238,3 +238,69 @@ html.dark .shadow-modal {
 html.dark .shadow-hover:hover {
   box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.6) !important;
 }
+
+/* Continuous Marquee Animation */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-continuous {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+.animate-marquee-continuous:hover {
+  animation-play-state: paused;
+}
+
+/* Hero Heading Shimmer and Text Reveal Animation */
+@keyframes heroHeadingShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-heading-animated {
+  background: linear-gradient(135deg, #102a43 0%, #1a365d 30%, #b45309 60%, #102a43 100%);
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both, heroHeadingShimmer 8s ease infinite;
+}
+
+html.dark .hero-heading-animated {
+  background: linear-gradient(135deg, #F7F2E8 0%, #BBCBD0 30%, #D8B66C 65%, #F7F2E8 100%);
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both, heroHeadingShimmer 8s ease infinite;
+}
+
+.hero-highlight-animated {
+  display: inline-block;
+  background: linear-gradient(120deg, #d97706, #b45309, #f59e0b);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroHeadingShimmer 4s ease infinite;
+}
+
+html.dark .hero-highlight-animated {
+  background: linear-gradient(120deg, #D8B66C, #F7F2E8, #D8B66C);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroHeadingShimmer 4s ease infinite;
+}

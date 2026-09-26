@@ -177,6 +177,7 @@ const BookDetails = () => {
   const isOwner = user?.id === book.owner?._id;
   const isAvailable = book.status === 'Available';
   const images = book.images && book.images.length > 0 ? book.images : [];
+  const coverImg = images.length > 0 ? images[0] : null;
   const topicData = getTopicsForBook(book);
 
   return (
