@@ -16,14 +16,8 @@ import {
   Send,
   Edit,
   Repeat,
-  ChevronLeft,
-  ChevronRight,
   Maximize2,
-  X,
-  Layers,
-  BookmarkCheck,
-  Eye,
-  Camera
+  X
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -32,13 +26,6 @@ import RequestModal from '../components/RequestModal';
 import BookCard from '../components/BookCard';
 import { formatPrice } from '../utils/formatPrice';
 import { getTopicsForBook } from '../utils/subjectTopics';
-
-const IMAGE_ANGLE_LABELS = [
-  { title: 'Front Cover', short: 'Front', icon: 'BookOpen' },
-  { title: 'Back Cover & ISBN', short: 'Back', icon: 'Layers' },
-  { title: 'Table of Contents / Index', short: 'Index', icon: 'BookmarkCheck' },
-  { title: 'Actual Condition Photo', short: 'Real Photo', icon: 'Camera' }
-];
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -49,7 +36,6 @@ const BookDetails = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const [inWishlist, setInWishlist] = useState(false);
@@ -69,7 +55,6 @@ const BookDetails = () => {
   useEffect(() => {
     setLoading(true);
     setSelectedTopicIndex(0);
-    setActiveImageIndex(0);
     api.get(`/api/books/${id}`)
       .then((res) => {
         if (res.data.success && res.data.book) {
@@ -161,18 +146,6 @@ const BookDetails = () => {
     }
   };
 
-  const handlePrevImage = (e) => {
-    e?.stopPropagation();
-    if (!images.length) return;
-    setActiveImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const handleNextImage = (e) => {
-    e?.stopPropagation();
-    if (!images.length) return;
-    setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center">
@@ -239,43 +212,20 @@ const BookDetails = () => {
         </div>
       </div>
 
-      {/* 2. Main Grid: Left Interactive Showcase + Right Details */}
+      {/* 2. Main Grid: Left Single Original Image Showcase + Right Details */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        {/* Left Column: Interactive Image Gallery (5 cols) */}
+        {/* Left Column: Single Original Book Image (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Angle Switcher Pills */}
-          {images.length > 1 && (
-            <div className="flex items-center gap-1.5 p-1 bg-cream-100 dark:bg-[#12242a] rounded-2xl border border-cream-200 dark:border-[#21434c] overflow-x-auto">
-              {images.slice(0, 4).map((_, idx) => {
-                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
-                const isSelected = activeImageIndex === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-xl text-[11px] font-bold transition-all truncate text-center ${
-                      isSelected
-                        ? 'bg-white dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 shadow-sm border border-cream-200 dark:border-[#2a4e5a] font-extrabold'
-                        : 'text-gray-600 dark:text-slate-300 hover:text-navy-900 dark:hover:text-white'
-                    }`}
-                  >
-                    {label.short}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Main Showcase Image Container */}
+          {/* Main Showcase Image Container - Single Original Image Only */}
           <div
-            onClick={() => images.length > 0 && setLightboxOpen(true)}
+            onClick={() => coverImg && setLightboxOpen(true)}
             className="relative aspect-[3/4] w-full rounded-3xl bg-cream-100 dark:bg-[#0f1d20] border border-cream-200 dark:border-[#21434c] overflow-hidden shadow-hover group cursor-zoom-in"
             title="Click to zoom image"
           >
-            {images.length > 0 ? (
+            {coverImg ? (
               <img
-                src={images[activeImageIndex] || images[0]}
-                alt={`${book.title} - ${IMAGE_ANGLE_LABELS[activeImageIndex]?.title || 'View'}`}
+                src={coverImg}
+                alt={book.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -287,26 +237,6 @@ const BookDetails = () => {
                 <BookOpen className="w-20 h-20 text-cream-300 dark:text-[#21434c] mb-2" />
                 <span className="text-xs font-semibold text-navy-700 dark:text-slate-300">Academic Textbook Cover</span>
               </div>
-            )}
-
-            {/* Next / Prev Image Hover Controls */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
-                  title="Previous image"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-navy-900/70 hover:bg-navy-900 text-white backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
-                  title="Next image"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
             )}
 
             {/* Zoom Icon Badge */}
@@ -337,62 +267,20 @@ const BookDetails = () => {
               )}
             </div>
 
-            {/* Current Active Angle Indicator Ribbon */}
-            <div className="absolute bottom-4 left-4 px-3 py-1 rounded-xl text-xs font-bold bg-navy-900/85 text-white shadow-sm backdrop-blur-sm z-10 flex items-center gap-1.5">
-              <Eye className="w-3.5 h-3.5 text-amber-400" />
-              <span>{IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}</span>
-            </div>
-
             {/* Condition badge */}
             <div className="absolute bottom-4 right-4 px-3 py-1 rounded-xl text-xs font-bold bg-white/95 dark:bg-[#12242a]/95 text-navy-900 dark:text-slate-200 shadow-sm border border-cream-200 dark:border-[#21434c] backdrop-blur-sm z-10">
               Condition: {book.condition}
             </div>
           </div>
 
-          {/* Thumbnail Gallery Strip */}
-          {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2 pt-1">
-              {images.slice(0, 4).map((img, idx) => {
-                const label = IMAGE_ANGLE_LABELS[idx] || { short: `Photo ${idx + 1}` };
-                const isSelected = activeImageIndex === idx;
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative rounded-2xl overflow-hidden border-2 transition-all aspect-[4/3] bg-cream-100 dark:bg-[#12242a] group/thumb ${
-                      isSelected
-                        ? 'border-brand-600 dark:border-amber-400 ring-2 ring-brand-500/30 shadow-md scale-[1.02]'
-                        : 'border-cream-200 dark:border-[#21434c] hover:border-brand-400 opacity-75 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={img}
-                      alt={label.short}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80';
-                      }}
-                    />
-                    <span className={`absolute inset-x-0 bottom-0 py-0.5 text-[9px] font-bold text-center truncate px-1 transition-colors ${
-                      isSelected ? 'bg-brand-600 dark:bg-amber-500 text-white dark:text-navy-950 font-black' : 'bg-navy-900/80 text-white'
-                    }`}>
-                      {label.short}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
           {/* Verified Protection Guarantee */}
-          <div className="p-4 rounded-2xl bg-cream-50 border border-cream-200/80 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-600 flex-shrink-0">
+          <div className="p-4 rounded-2xl bg-cream-50 dark:bg-[#12242a] border border-cream-200/80 dark:border-[#21434c] flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-brand-50 dark:bg-[#1b3842] flex items-center justify-center text-brand-600 dark:text-amber-400 flex-shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div className="text-xs">
-              <p className="font-bold text-navy-900">Direct Campus Handover</p>
-              <p className="text-gray-500">Meet safely on university campus or mutually agreed library meetup points.</p>
+              <p className="font-bold text-navy-900 dark:text-white">Direct Campus Handover</p>
+              <p className="text-gray-500 dark:text-slate-400">Meet safely on university campus or mutually agreed library meetup points.</p>
             </div>
           </div>
         </div>
@@ -703,15 +591,15 @@ const BookDetails = () => {
       )}
 
       {/* 4. Fullscreen Image Lightbox Modal */}
-      {lightboxOpen && (
+      {lightboxOpen && coverImg && (
         <div
           onClick={() => setLightboxOpen(false)}
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-fade-in"
         >
           {/* Top toolbar */}
           <div className="w-full max-w-5xl flex items-center justify-between text-white mb-3 px-2">
-            <span className="text-sm font-bold">
-              {book.title} — {IMAGE_ANGLE_LABELS[activeImageIndex]?.title || `Photo ${activeImageIndex + 1}`}
+            <span className="text-sm font-bold truncate">
+              {book.title}
             </span>
             <button
               onClick={() => setLightboxOpen(false)}
@@ -724,51 +612,14 @@ const BookDetails = () => {
           {/* Main modal image */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-4xl max-h-[80vh] flex items-center justify-center"
+            className="relative max-w-4xl max-h-[85vh] flex items-center justify-center"
           >
             <img
-              src={images[activeImageIndex] || images[0]}
+              src={coverImg}
               alt={book.title}
-              className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
             />
-
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
-                >
-                  <ChevronLeft className="w-7 h-7" />
-                </button>
-                <button
-                  onClick={handleNextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center shadow-lg"
-                >
-                  <ChevronRight className="w-7 h-7" />
-                </button>
-              </>
-            )}
           </div>
-
-          {/* Angle switcher in lightbox */}
-          {images.length > 1 && (
-            <div className="flex gap-2 mt-4 overflow-x-auto">
-              {images.slice(0, 4).map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveImageIndex(idx);
-                  }}
-                  className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                    activeImageIndex === idx ? 'border-amber-400 scale-105' : 'border-white/30 opacity-60'
-                  }`}
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       )}
 
