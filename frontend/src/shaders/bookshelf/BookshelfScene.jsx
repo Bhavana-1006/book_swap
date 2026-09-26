@@ -18,11 +18,17 @@ export function BookshelfScene({ className = "" }) {
     let resizeObserver;
     let timerId;
 
-    // Defer initialization so initial page paint and user interaction are instant
+    // Fast prompt initialization without artificial blocking delays
     const initRenderer = () => {
       if (disposed) return;
       try {
+        const prefersReducedMotion =
+          typeof window !== 'undefined' &&
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         renderer = createBookshelfRenderer(host, canvas, {
+          reducedMotion: prefersReducedMotion,
           onReady: () => {
             if (!disposed) setState("ready");
           },
@@ -57,14 +63,12 @@ export function BookshelfScene({ className = "" }) {
       }
     };
 
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      window.requestIdleCallback(initRenderer, { timeout: 1000 });
-    } else {
-      timerId = setTimeout(initRenderer, 150);
-    }
+    // Execute immediately on next animation frame
+    const frameId = requestAnimationFrame(initRenderer);
 
     return () => {
       disposed = true;
+      if (frameId) cancelAnimationFrame(frameId);
       if (timerId) clearTimeout(timerId);
       if (resizeObserver) resizeObserver.disconnect();
       if (renderer && typeof renderer.dispose === 'function') {

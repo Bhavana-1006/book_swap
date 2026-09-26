@@ -5,7 +5,7 @@ const reviewSchema = new mongoose.Schema(
     request: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Request',
-      required: [true, 'Review must be linked to a completed exchange request']
+      required: false
     },
     reviewer: {
       type: mongoose.Schema.Types.ObjectId,
@@ -15,12 +15,12 @@ const reviewSchema = new mongoose.Schema(
     reviewee: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: false
     },
     book: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Book',
-      required: true
+      required: false
     },
     rating: {
       type: Number,
@@ -32,7 +32,12 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: [1000, 'Comment cannot exceed 1000 characters'],
-      default: ''
+      required: [true, 'Review comment is required']
+    },
+    reviewType: {
+      type: String,
+      enum: ['exchange', 'campus_platform', 'book_feedback'],
+      default: 'campus_platform'
     }
   },
   {
@@ -40,8 +45,8 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// Prevent duplicate review for the same exchange by the same user
-reviewSchema.index({ request: 1, reviewer: 1 }, { unique: true });
+reviewSchema.index({ request: 1, reviewer: 1 });
 reviewSchema.index({ reviewee: 1 });
+reviewSchema.index({ createdAt: -1 });
 
 module.exports = mongoose.model('Review', reviewSchema);

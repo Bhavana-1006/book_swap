@@ -26,6 +26,7 @@ import {
 import api from '../services/api';
 import BookCard from '../components/BookCard';
 import BookSkeleton from '../components/BookSkeleton';
+import StudentReviewsSection from '../components/StudentReviewsSection';
 import { CATEGORIES_DATA } from '../utils/categories';
 import { useAuth } from '../context/AuthContext';
 
@@ -494,7 +495,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 9. CALL TO ACTION SECTION */}
+      {/* 9. STUDENT REVIEWS SECTION */}
+      <StudentReviewsSection />
+
+      {/* 10. CALL TO ACTION SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-navy-900 text-white rounded-3xl p-8 sm:p-12 shadow-modal relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-xl space-y-4 text-center md:text-left">

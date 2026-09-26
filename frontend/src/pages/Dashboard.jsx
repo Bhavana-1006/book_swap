@@ -19,7 +19,10 @@ import {
   Clock,
   Sparkles,
   Filter,
-  CheckCircle
+  CheckCircle,
+  Trophy,
+  Award,
+  Compass
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -30,7 +33,7 @@ const Dashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Active Category selection from Sidebar: 'All', '10th Class', 'Intermediate', 'Medical', 'Engineering'
+  // Active Category selection from Sidebar
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -46,10 +49,14 @@ const Dashboard = () => {
 
   const categories = [
     { id: 'All', label: 'All Categories', icon: BookOpen, count: null },
-    { id: '10th Class', label: '10th Class', icon: GraduationCap, query: 'School' },
+    { id: '10th Class', label: '10th Class', icon: GraduationCap, query: '10th Class' },
     { id: 'Intermediate', label: 'Intermediate', icon: Layers, query: 'Intermediate' },
     { id: 'Medical', label: 'Medical', icon: Stethoscope, query: 'Medical' },
-    { id: 'Engineering', label: 'Engineering', icon: Cpu, query: 'Engineering' }
+    { id: 'Engineering', label: 'Engineering', icon: Cpu, query: 'Engineering' },
+    { id: 'Competitive Exams', label: 'Competitive Exams', icon: Trophy, query: 'Competitive Exams' },
+    { id: 'Degree', label: 'Degree', icon: Award, query: 'Degree' },
+    { id: 'Novels', label: 'Novels', icon: BookOpen, query: 'Novels' },
+    { id: 'General Reading', label: 'General Reading', icon: Compass, query: 'General Reading' }
   ];
 
   // Fetch Dashboard Stats & User-specific info

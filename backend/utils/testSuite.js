@@ -16,10 +16,10 @@ const runTests = async () => {
     const healthRes = await axios.get(`${BASE_URL}/health`);
     console.log(` -> Status: ${healthRes.data.status}, DB: ${healthRes.data.database.status}`);
 
-    // 2. Auth: Login as Student Alex
+    // 2. Auth: Login as Student Rahul
     console.log('\n[Test 2] Student Login...');
     const loginRes = await axios.post(`${BASE_URL}/auth/login`, {
-      email: 'alex@student.edu',
+      email: 'rahul.eng@campus.edu',
       password: 'password123'
     });
     studentToken = loginRes.data.token;

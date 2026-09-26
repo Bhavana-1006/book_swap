@@ -2,104 +2,122 @@ export const CATEGORIES_DATA = [
   {
     id: '10th Class',
     name: '10th Class',
-    query: 'School',
-    tagline: 'NCERT, CBSE & State Board',
+    query: '10th Class',
+    tagline: 'Mathematics, Science, Social & Languages',
     icon: 'GraduationCap',
     subcategories: [
-      'Class 10',
-      'Class 9',
-      'NCERT',
-      'CBSE',
-      'ICSE',
-      'State Board'
+      'Mathematics',
+      'Physical Science',
+      'Biology',
+      'Social Studies',
+      'English',
+      'Telugu',
+      'Hindi'
     ]
   },
   {
     id: 'Intermediate',
     name: 'Intermediate',
     query: 'Intermediate',
-    tagline: '+1 & +2 Higher Secondary',
+    tagline: 'MPC, BiPC, MEC & CEC (1st & 2nd Year)',
     icon: 'Layers',
     subcategories: [
-      '1st Year',
-      '2nd Year',
-      'MPC',
-      'BiPC',
-      'CEC',
-      'MEC'
+      'MPC (Maths, Physics, Chem)',
+      'BiPC (Botany, Zoology, Physics)',
+      'MEC (Maths, Economics, Commerce)',
+      'CEC (Civics, Economics, Commerce)',
+      '1st Year Intermediate',
+      '2nd Year Intermediate'
     ]
   },
   {
     id: 'Medical',
     name: 'Medical',
     query: 'Medical',
-    tagline: 'MBBS, BDS & Pharmacy',
+    tagline: 'MBBS, BDS, Anatomy & Pharmacy',
     icon: 'Stethoscope',
     subcategories: [
       'MBBS',
-      'BDS',
+      'Anatomy',
+      'Physiology',
+      'Biochemistry',
+      'Pharmacology',
       'Nursing',
-      'Pharmacy',
-      'NEET'
+      'BDS & Dental Sciences'
     ]
   },
   {
     id: 'Engineering',
     name: 'Engineering',
     query: 'Engineering',
-    tagline: 'B.Tech & Core Streams',
+    tagline: 'CSE, AI/ML, IT, ECE, EEE, Civil & Mech',
     icon: 'Cpu',
     subcategories: [
-      'CSE',
-      'CSE-AIML',
-      'ECE',
-      'EEE',
-      'Mechanical',
-      'Civil',
-      'IT'
+      'Computer Science (CSE)',
+      'Artificial Intelligence & ML',
+      'Information Technology (IT)',
+      'Electronics & Communication (ECE)',
+      'Electrical & Electronics (EEE)',
+      'Mechanical Engineering',
+      'Civil Engineering'
     ]
   },
   {
     id: 'Competitive Exams',
     name: 'Competitive Exams',
     query: 'Competitive Exams',
-    tagline: 'JEE, NEET, GATE & EAMCET',
+    tagline: 'UPSC, SSC, Banking, NEET, JEE & GATE',
     icon: 'Trophy',
     subcategories: [
-      'EAMCET / EAPCET',
-      'JEE',
-      'NEET',
-      'UPSC',
-      'GATE',
-      'CAT'
+      'UPSC Civil Services',
+      'SSC & Banking Exams',
+      'Railways (RRB)',
+      'NEET Medical Entrance',
+      'JEE Main & Advanced',
+      'GATE Engineering',
+      'EAMCET / EAPCET'
     ]
   },
   {
     id: 'Degree',
     name: 'Degree',
     query: 'Degree',
-    tagline: 'B.Com, B.Sc, BBA, MBA',
+    tagline: 'B.Sc, B.Com, BBA, BA, BCA Courses',
     icon: 'Award',
     subcategories: [
-      'B.Com',
-      'B.Sc',
-      'BBA',
-      'BA',
-      'MCA',
-      'MBA'
+      'B.Sc (Science & Maths)',
+      'B.Com (Commerce & Accounts)',
+      'BBA (Business Admin)',
+      'BA (Arts & Humanities)',
+      'BCA (Computer Applications)'
     ]
   },
   {
     id: 'Novels',
     name: 'Novels',
     query: 'Novels',
-    tagline: 'Self-Help & Literature',
+    tagline: 'Fiction, Romance, Mystery & Classics',
     icon: 'BookOpen',
     subcategories: [
-      'Self-Help',
       'Fiction',
-      'Non-Fiction',
-      'Finance & Wealth'
+      'Romance',
+      'Mystery & Thriller',
+      'Fantasy & Sci-Fi',
+      'Classics & Literature'
+    ]
+  },
+  {
+    id: 'General Reading',
+    name: 'General Reading',
+    query: 'General Reading',
+    tagline: 'Psychology, Finance, Self-Help & History',
+    icon: 'Compass',
+    subcategories: [
+      'Psychology & Human Mind',
+      'Personal Finance & Wealth',
+      'Self-Help & Productivity',
+      'History & Civilizations',
+      'Biographies & Memoirs'
     ]
   }
 ];
@@ -112,5 +130,6 @@ export const ALL_CATEGORIES = [
   'Engineering',
   'Competitive Exams',
   'Degree',
-  'Novels'
+  'Novels',
+  'General Reading'
 ];
