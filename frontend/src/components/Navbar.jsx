@@ -68,14 +68,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-navy-800 dark:bg-brand-600 flex items-center justify-center text-white shadow-soft group-hover:scale-105 transition-transform">
-              <BookOpen className="w-5 h-5 text-brand-500 dark:text-white" />
+            <div className="w-10 h-10 rounded-xl bg-navy-800 dark:bg-[#172A33] border border-transparent dark:border-[#36505A] flex items-center justify-center text-white shadow-soft group-hover:scale-105 transition-transform">
+              <BookOpen className="w-5 h-5 text-brand-500 dark:text-[#D8B66C]" />
             </div>
             <div>
-              <span className="font-serif text-2xl font-bold tracking-tight text-navy-900 dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-amber-400 transition-colors">
-                Book<span className="text-brand-600 dark:text-amber-400">Swap</span>
+              <span className="font-serif text-2xl font-bold tracking-tight text-navy-900 dark:text-[#F7F2E8] group-hover:text-brand-600 dark:group-hover:text-[#D8B66C] transition-colors">
+                Book<span className="text-brand-600 dark:text-[#D8B66C]">Swap</span>
               </span>
-              <span className="block text-[10px] font-semibold tracking-wider uppercase text-gray-500 dark:text-slate-400 -mt-1">
+              <span className="block text-[10px] font-semibold tracking-wider uppercase text-gray-500 dark:text-[#BBCBD0] -mt-1">
                 Campus Exchange
               </span>
             </div>
@@ -258,13 +258,13 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-semibold text-navy-800 dark:text-slate-200 hover:text-brand-600 dark:hover:text-amber-400 transition-colors"
+                  className="px-4 py-2 text-sm font-semibold text-navy-800 dark:text-[#BBCBD0] hover:text-brand-600 dark:hover:text-[#D8B66C] transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="px-5 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 dark:bg-amber-500 dark:hover:bg-amber-600 dark:text-navy-950 rounded-xl shadow-sm hover:shadow transition-all"
+                  className="px-5 py-2 text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 dark:bg-[#D8B66C] dark:hover:bg-[#c4a259] dark:text-[#101D24] rounded-xl shadow-sm hover:shadow transition-all"
                 >
                   Get Started
                 </Link>
@@ -277,14 +277,14 @@ const Navbar = () => {
             <ThemeToggle />
             <Link
               to="/create-listing"
-              className="p-2 rounded-lg bg-brand-600 dark:bg-amber-500 text-white dark:text-navy-950"
+              className="p-2 rounded-lg bg-brand-600 dark:bg-[#D8B66C] text-white dark:text-[#101D24]"
               title="List a Book"
             >
               <PlusCircle className="w-5 h-5" />
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-700 dark:text-slate-200 hover:bg-cream-200 dark:hover:bg-[#1a353e] transition-colors"
+              className="p-2 rounded-lg text-gray-700 dark:text-[#BBCBD0] hover:bg-cream-200 dark:hover:bg-[#203640] transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -294,56 +294,56 @@ const Navbar = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-cream-200 dark:border-[#21434c] bg-white dark:bg-[#102228] px-4 pt-3 pb-6 space-y-2 shadow-lg animate-slide-in">
+        <div className="md:hidden border-t border-cream-200 dark:border-[#36505A] bg-white dark:bg-[#172A33] px-4 pt-3 pb-6 space-y-2 shadow-lg animate-slide-in">
           <Link
             to="/browse"
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
           >
-            <Search className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+            <Search className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
             <span>Browse Books</span>
           </Link>
           <Link
             to="/nearby"
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
           >
-            <MapPin className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <MapPin className="w-4 h-4 text-emerald-600 dark:text-[#78C49C]" />
             <span>Books Near Me</span>
           </Link>
           <Link
             to="/swaps"
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
           >
-            <Repeat className="w-4 h-4 text-accent-600 dark:text-amber-400" />
+            <Repeat className="w-4 h-4 text-accent-600 dark:text-[#D8B66C]" />
             <span>Smart Swaps</span>
           </Link>
 
           {isAuthenticated ? (
             <>
-              <div className="border-t border-cream-200 dark:border-[#21434c] pt-2 my-2"></div>
+              <div className="border-t border-cream-200 dark:border-[#36505A] pt-2 my-2"></div>
               <Link
                 to="/my-listings"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
               >
-                <Layers className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                <Layers className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                 <span>My Listings</span>
               </Link>
               <Link
                 to="/requests"
-                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
               >
                 <div className="flex items-center gap-2">
-                  <Inbox className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                  <Inbox className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                   <span>My Requests</span>
                 </div>
                 {pendingRequestsCount > 0 && (
-                  <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-brand-500 text-white">
+                  <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-brand-500 dark:bg-[#D8B66C] text-white dark:text-[#101D24]">
                     {pendingRequestsCount} new
                   </span>
                 )}
               </Link>
               <Link
                 to="/wishlist"
-                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+                className="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
               >
                 <div className="flex items-center gap-2">
                   <Heart className="w-4 h-4 text-rose-500" />
@@ -357,9 +357,9 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/profile"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-800 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640] hover:text-navy-900 dark:hover:text-[#F7F2E8]"
               >
-                <User className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                <User className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                 <span>Profile ({user?.name})</span>
               </Link>
 
@@ -385,13 +385,13 @@ const Navbar = () => {
             <div className="pt-4 flex flex-col gap-2">
               <Link
                 to="/login"
-                className="w-full py-2.5 text-center text-sm font-semibold rounded-xl border border-cream-300 dark:border-[#21434c] text-navy-900 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#183139]"
+                className="w-full py-2.5 text-center text-sm font-semibold rounded-xl border border-cream-300 dark:border-[#36505A] text-navy-900 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#203640]"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="w-full py-2.5 text-center text-sm font-bold rounded-xl bg-brand-600 hover:bg-brand-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white dark:text-navy-950 shadow-sm"
+                className="w-full py-2.5 text-center text-sm font-bold rounded-xl bg-brand-600 hover:bg-brand-700 dark:bg-[#D8B66C] dark:hover:bg-[#c4a259] text-white dark:text-[#101D24] shadow-sm"
               >
                 Get Started
               </Link>
