@@ -88,8 +88,8 @@ const Navbar = () => {
                 to="/dashboard"
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive('/dashboard')
-                    ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                    : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                    ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                    : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
                 }`}
               >
                 Dashboard
@@ -100,8 +100,8 @@ const Navbar = () => {
               to="/browse"
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive('/browse')
-                  ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                  : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                  ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                  : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
               }`}
             >
               Explore Books
@@ -111,11 +111,11 @@ const Navbar = () => {
               to="/nearby"
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive('/nearby')
-                  ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                  : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                  ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                  : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
               }`}
             >
-              <MapPin className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <MapPin className="w-4 h-4 text-emerald-600 dark:text-[#78C49C]" />
               <span>Near Me</span>
             </Link>
 
@@ -123,11 +123,11 @@ const Navbar = () => {
               to="/swaps"
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive('/swaps')
-                  ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                  : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                  ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                  : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
               }`}
             >
-              <Repeat className="w-4 h-4 text-accent-600 dark:text-amber-400" />
+              <Repeat className="w-4 h-4 text-accent-600 dark:text-[#D8B66C]" />
               <span>Smart Swaps</span>
             </Link>
 
@@ -137,11 +137,11 @@ const Navbar = () => {
                   to="/my-listings"
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive('/my-listings')
-                      ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                      : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                      ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                      : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
                   }`}
                 >
-                  <Layers className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                  <Layers className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                   <span>My Listings</span>
                 </Link>
 
@@ -149,14 +149,14 @@ const Navbar = () => {
                   to="/requests"
                   className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive('/requests')
-                      ? 'bg-cream-200 dark:bg-[#1e3a43] text-navy-900 dark:text-amber-300 font-semibold'
-                      : 'text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36]'
+                      ? 'bg-cream-200 dark:bg-[#203640] text-navy-900 dark:text-[#D8B66C] font-semibold'
+                      : 'text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33]'
                   }`}
                 >
-                  <Inbox className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                  <Inbox className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                   <span>Requests</span>
                   {pendingRequestsCount > 0 && (
-                    <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-brand-500 text-white animate-pulse">
+                    <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-brand-500 dark:bg-[#D8B66C] text-white dark:text-[#101D24] animate-pulse">
                       {pendingRequestsCount}
                     </span>
                   )}
@@ -164,8 +164,8 @@ const Navbar = () => {
 
                 <Link
                   to="/wishlist"
-                  className={`relative p-2 rounded-lg text-gray-700 dark:text-slate-200 hover:text-navy-900 dark:hover:text-white hover:bg-cream-100 dark:hover:bg-[#162e36] transition-colors ${
-                    isActive('/wishlist') ? 'bg-cream-200 dark:bg-[#1e3a43] text-rose-600' : ''
+                  className={`relative p-2 rounded-lg text-gray-700 dark:text-[#BBCBD0] hover:text-navy-900 dark:hover:text-[#F7F2E8] hover:bg-cream-100 dark:hover:bg-[#172A33] transition-colors ${
+                    isActive('/wishlist') ? 'bg-cream-200 dark:bg-[#203640] text-rose-600' : ''
                   }`}
                   title="My Wishlist"
                 >
@@ -187,7 +187,7 @@ const Navbar = () => {
 
             <Link
               to="/create-listing"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white dark:text-navy-950 text-sm font-semibold shadow-sm hover:shadow transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 dark:bg-[#D8B66C] dark:hover:bg-[#c4a259] text-white dark:text-[#101D24] text-sm font-semibold shadow-sm hover:shadow transition-all"
             >
               <PlusCircle className="w-4 h-4" />
               <span>List a Book</span>
@@ -197,38 +197,38 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1.5 rounded-full hover:ring-2 hover:ring-brand-500 dark:hover:ring-amber-400 transition-all focus:outline-none"
+                  className="flex items-center gap-2 p-1.5 rounded-full hover:ring-2 hover:ring-brand-500 dark:hover:ring-[#D8B66C] transition-all focus:outline-none"
                 >
                   {user?.profileImage ? (
                     <img
                       src={user.profileImage}
                       alt={user.name}
-                      className="w-8 h-8 rounded-full object-cover border border-cream-300 dark:border-navy-600"
+                      className="w-8 h-8 rounded-full object-cover border border-cream-300 dark:border-[#36505A]"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-navy-700 dark:bg-brand-600 text-white flex items-center justify-center font-bold text-xs uppercase">
+                    <div className="w-8 h-8 rounded-full bg-navy-700 dark:bg-[#D8B66C] text-white dark:text-[#101D24] flex items-center justify-center font-bold text-xs uppercase">
                       {user?.name?.charAt(0) || 'U'}
                     </div>
                   )}
-                  <span className="text-xs font-semibold text-navy-800 dark:text-slate-100 max-w-[100px] truncate">
+                  <span className="text-xs font-semibold text-navy-800 dark:text-[#F7F2E8] max-w-[100px] truncate">
                     {user?.name}
                   </span>
                 </button>
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#12242a] rounded-2xl shadow-modal border border-cream-200 dark:border-[#21434c] py-2 z-50 animate-slide-in">
-                    <div className="px-4 py-2 border-b border-cream-200 dark:border-[#21434c]">
-                      <p className="text-xs text-gray-500 dark:text-slate-400">Signed in as</p>
-                      <p className="text-sm font-bold text-navy-900 dark:text-white truncate">{user?.name}</p>
-                      <p className="text-[11px] text-brand-600 dark:text-amber-400 font-medium truncate">{user?.college}</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#203640] rounded-2xl shadow-modal border border-cream-200 dark:border-[#36505A] py-2 z-50 animate-slide-in">
+                    <div className="px-4 py-2 border-b border-cream-200 dark:border-[#36505A]">
+                      <p className="text-xs text-gray-500 dark:text-[#BBCBD0]">Signed in as</p>
+                      <p className="text-sm font-bold text-navy-900 dark:text-[#F7F2E8] truncate">{user?.name}</p>
+                      <p className="text-[11px] text-brand-600 dark:text-[#D8B66C] font-medium truncate">{user?.college}</p>
                     </div>
 
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 dark:text-slate-200 hover:bg-cream-100 dark:hover:bg-[#1a353e] hover:text-navy-900 dark:hover:text-white transition-colors"
+                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 dark:text-[#BBCBD0] hover:bg-cream-100 dark:hover:bg-[#29434D] hover:text-navy-900 dark:hover:text-[#F7F2E8] transition-colors"
                     >
-                      <User className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                      <User className="w-4 h-4 text-gray-500 dark:text-[#8C9FA6]" />
                       <span>My Profile</span>
                     </Link>
 

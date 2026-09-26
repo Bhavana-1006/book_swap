@@ -317,7 +317,7 @@ const Browse = () => {
             {listingType !== 'DONATE' && (
               <div>
                 <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider mb-2">
-                  Price Range ($ USD)
+                  Price Range (₹ INR)
                 </label>
                 <div className="flex items-center gap-2">
                   <input

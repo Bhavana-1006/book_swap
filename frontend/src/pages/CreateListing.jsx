@@ -528,57 +528,46 @@ const CreateListing = () => {
           </div>
         </div>
 
-        {/* SECTION 4: PHOTOS UPLOAD */}
+        {/* SECTION 4: BOOK COVER PHOTO */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <label className="block text-xs font-bold text-navy-900 uppercase tracking-wider">
-              Book Photos (Up to 5 images)
+              Book Cover Photo (Primary Front Cover)
             </label>
-            <span className="text-[11px] text-gray-500 font-medium">Front, Back, Index, Real Condition</span>
+            <span className="text-[11px] text-gray-500 font-medium">Front Cover Image</span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] text-gray-600 bg-cream-50 p-2.5 rounded-xl border border-cream-200">
-            <span className="flex items-center gap-1 font-semibold text-navy-900">1. Front Cover</span>
-            <span className="flex items-center gap-1 font-semibold text-navy-900">2. Back & ISBN</span>
-            <span className="flex items-center gap-1 font-semibold text-navy-900">3. Contents Page</span>
-            <span className="flex items-center gap-1 font-semibold text-navy-900">4. Real Condition</span>
-          </div>
-
-          {/* Image Previews with Angle Badges */}
+          {/* Image Previews */}
           {imagePreviews.length > 0 && (
             <div className="flex flex-wrap gap-3 pb-2">
-              {imagePreviews.map((url, idx) => {
-                const angleNames = ['Front Cover', 'Back Cover', 'Index / Sample', 'Actual Condition', 'Additional'];
-                return (
-                  <div key={idx} className="relative w-28 h-32 rounded-xl overflow-hidden border-2 border-cream-300 shadow-sm group bg-cream-100 flex flex-col justify-between">
-                    <img src={url} alt="preview" className="w-full h-full object-cover" />
-                    <span className="absolute bottom-0 inset-x-0 py-0.5 text-[9px] font-bold text-center bg-navy-900/90 text-white truncate px-1">
-                      {angleNames[idx] || `Photo ${idx + 1}`}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => removeImage(idx)}
-                      className="absolute top-1 right-1 p-1 bg-rose-600 text-white rounded-full opacity-90 hover:opacity-100 transition-opacity shadow-sm"
-                      title="Remove image"
-                    >
-                      <X className="w-3 h-3" />
-                    </button>
-                  </div>
-                );
-              })}
+              {imagePreviews.map((url, idx) => (
+                <div key={idx} className="relative w-28 h-36 rounded-xl overflow-hidden border-2 border-cream-300 shadow-sm group bg-cream-100 flex flex-col justify-between">
+                  <img src={url} alt="preview" className="w-full h-full object-cover" />
+                  <span className="absolute bottom-0 inset-x-0 py-0.5 text-[9px] font-bold text-center bg-navy-900/90 text-white truncate px-1">
+                    Front Cover
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeImage(idx)}
+                    className="absolute top-1 right-1 p-1 bg-rose-600 text-white rounded-full opacity-90 hover:opacity-100 transition-opacity shadow-sm"
+                    title="Remove image"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
 
           {/* File input drop area */}
           <label className="border-2 border-dashed border-cream-300 hover:border-brand-500 rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer bg-cream-50/50 hover:bg-cream-100/50 transition-colors">
             <Upload className="w-8 h-8 text-brand-600 mb-2" />
-            <span className="text-xs font-bold text-navy-900">Click or drag photos to upload</span>
-            <span className="text-[11px] text-gray-500 mt-1">PNG, JPG, WEBP up to 5MB (Upload front, back, index & actual wear photos)</span>
+            <span className="text-xs font-bold text-navy-900">Click or drag front cover photo to upload</span>
+            <span className="text-[11px] text-gray-500 mt-1">PNG, JPG, WEBP up to 5MB</span>
             <input
               type="file"
-              multiple
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={handleImageChange}
               className="hidden"
             />
           </label>
